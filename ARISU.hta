@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <title>ARISU</title>
+    
+    <!-- HTA Configuration -->
+    <HTA:APPLICATION 
+        ID="ARISU"
+        APPLICATIONNAME="ARISU"
+        BORDER="thin"
+        BORDERSTYLE="normal"
+        CAPTION="yes"
+        MAXIMIZEBUTTON="yes"
+        MINIMIZEBUTTON="yes"
+        SHOWINTASKBAR="yes"
+        SINGLEINSTANCE="yes"
+        SYSMENU="yes"
+        WINDOWSTATE="normal"
+    />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e4e4e4;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            border-bottom: 2px solid #9d4edd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: #c77dff;
+        }
+        
+        .status {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .chat-container {
+            height: calc(100vh - 180px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #9d4edd;
+            border-radius: 4px;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+        }
+        
+        .message-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+        }
+        
+        .message-time {
+            color: #888;
+            font-size: 12px;
+        }
+        
+        .emotion-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+        }
+        
+        .message-content {
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        
+        .message.user {
+            text-align: right;
+        }
+        
+        .message.user .message-header {
+            justify-content: flex-end;
+        }
+        
+        .message.user .message-sender {
+            color: #4cc9f0;
+        }
+        
+        .message.user .message-content {
+            background: linear-gradient(135deg, #4cc9f0 0%, #3a0ca3 100%);
+            color: white;
+            display: inline-block;
+            text-align: left;
+        }
+        
+        .message.arisu .message-sender {
+            color: #c77dff;
+        }
+        
+        .message.arisu .message-content {
+            background: rgba(157, 78, 221, 0.15);
+            border-left: 3px solid #9d4edd;
+        }
+        
+        .input-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 20px;
+            border-top: 2px solid #9d4edd;
+            display: flex;
+            gap: 10px;
+        }
+        
+        #messageInput {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(157, 78, 221, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        #messageInput:focus {
+            outline: none;
+            border-color: #9d4edd;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #9d4edd 0%, #7209b7 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #7209b7 0%, #560bad 100%);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .greeting {
+            text-align: center;
+            padding: 40px 20px;
+            color: #c77dff;
+            font-size: 18px;
+        }
+        
+        .error {
+            color: #ff6b6b;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 8px;
+            margin: 20px;
+        }
+        
+        .typing {
+            color: #9d4edd;
+            font-style: italic;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>✦ ARISU</h1>
+        <div class="status">
+            <span id="statusText">Starting...</span>
+            <button class="btn-secondary" onclick="showStats()">Stats</button>
+            <button class="btn-secondary" onclick="clearChat()">Clear</button>
+        </div>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="greeting" id="greeting">Connecting to ARISU...</div>
+    </div>
+    
+    <div class="input-area">
+        <input 
+            type="text" 
+            id="messageInput" 
+            placeholder="Type your message..."
+        />
+        <button id="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+    
+    <script language="javascript">
+        var API_URL = 'http://127.0.0.1:5000/api';
+        var isSending = false;
+        
+        // Initialize on load
+        window.onload = function() {
+            setupInput();
+            testConnection();
+        };
+        
+        function setupInput() {
+            var input = document.getElementById('messageInput');
+            
+            input.onkeydown = function(e) {
+                if (e.keyCode === 13) { // Enter key
+                    e.preventDefault();
+                    sendMessage();
+                    return false;
+                }
+            };
+            
+            input.focus();
+        }
+        
+        function testConnection() {
+            try {
+                var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                xhr.open("GET", API_URL + "/greeting", false);
+                xhr.send();
+                
+                if (xhr.status === 200) {
+                    var data = eval('(' + xhr.responseText + ')');
+                    document.getElementById('greeting').innerText = data.greeting;
+                    document.getElementById('statusText').innerText = 'Connected';
+                    document.getElementById('statusText').style.color = '#4cc9f0';
+                    loadHistory();
+                } else {
+                    showError('API returned status: ' + xhr.status);
+                }
+            } catch(e) {
+                showError('Cannot connect to API. Make sure arisu_api.py is running!');
+            }
+        }
+        
+        function loadHistory() {
+            try {
+                var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                xhr.open("GET", API_URL + "/history", false);
+                xhr.send();
+                
+                if (xhr.status === 200) {
+                    var data = eval('(' + xhr.responseText + ')');
+                    
+                    if (data.messages && data.messages.length > 0) {
+                        document.getElementById('greeting').style.display = 'none';
+                        
+                        for (var i = 0; i < data.messages.length; i++) {
+                            var msg = data.messages[i];
+                            if (msg.role === 'user') {
+                                addMessage('You', msg.content, 'user', '--:--', null);
+                            } else if (msg.role === 'assistant') {
+                                addMessage('ARISU', msg.content, 'arisu', '--:--', null);
+                            }
+                        }
+                    }
+                }
+            } catch(e) {
+                // No history or error loading - not critical
+            }
+        }
+        
+        function showError(msg) {
+            document.getElementById('greeting').innerHTML = 
+                '<div class="error">⚠️ Connection Error<br><br>' + msg + '<br><br>Start the API with:<br><b>python arisu_api.py</b></div>';
+            document.getElementById('statusText').innerText = 'Disconnected';
+            document.getElementById('statusText').style.color = '#ff6b6b';
+        }
+        
+        function sendMessage() {
+            if (isSending) return;
+            
+            var input = document.getElementById('messageInput');
+            var message = input.value;
+            
+            // Trim whitespace
+            if (message) {
+                message = message.replace(/^\s+|\s+$/g, '');
+            }
+            
+            if (!message) return;
+            
+            // Disable input
+            isSending = true;
+            input.disabled = true;
+            document.getElementById('sendBtn').disabled = true;
+            
+            // Hide greeting
+            document.getElementById('greeting').style.display = 'none';
+            
+            // Add user message
+            addMessage('You', message, 'user', getTime(), null);
+            
+            // Clear input
+            input.value = '';
+            
+            // Show typing indicator
+            var typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'typing';
+            typingDiv.innerText = 'ARISU is thinking...';
+            document.getElementById('chatContainer').appendChild(typingDiv);
+            scrollToBottom();
+            
+            // Send to API
+            try {
+                var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                xhr.open("POST", API_URL + "/chat", false);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                
+                var requestData = '{"message":"' + escapeJson(message) + '"}';
+                xhr.send(requestData);
+                
+                // Remove typing indicator
+                var typing = document.getElementById('typingIndicator');
+                if (typing) {
+                    typing.parentNode.removeChild(typing);
+                }
+                
+                if (xhr.status === 200) {
+                    var data = eval('(' + xhr.responseText + ')');
+                    addMessage('ARISU', data.response, 'arisu', data.timestamp, data.emotion);
+                } else {
+                    addMessage('ARISU', '...Something went wrong. Status: ' + xhr.status, 'arisu', getTime(), null);
+                }
+            } catch(e) {
+                // Remove typing indicator
+                var typing = document.getElementById('typingIndicator');
+                if (typing) {
+                    typing.parentNode.removeChild(typing);
+                }
+                
+                addMessage('ARISU', '...Connection error. Is the API still running?', 'arisu', getTime(), null);
+            }
+            
+            // Re-enable input
+            isSending = false;
+            input.disabled = false;
+            document.getElementById('sendBtn').disabled = false;
+            input.focus();
+        }
+        
+        function addMessage(sender, content, type, time, emotion) {
+            var container = document.getElementById('chatContainer');
+            
+            var msgDiv = document.createElement('div');
+            msgDiv.className = 'message ' + type;
+            
+            var emotionBadge = '';
+            if (emotion) {
+                emotionBadge = '<span class="emotion-badge">' + emotion + '</span>';
+            }
+            
+            msgDiv.innerHTML = 
+                '<div class="message-header">' +
+                '<span class="message-sender">' + sender + '</span>' +
+                '<span class="message-time">' + time + '</span>' +
+                emotionBadge +
+                '</div>' +
+                '<div class="message-content">' + escapeHtml(content) + '</div>';
+            
+            container.appendChild(msgDiv);
+            scrollToBottom();
+        }
+        
+        function scrollToBottom() {
+            var container = document.getElementById('chatContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;')
+                .replace(/\n/g, '<br>');
+        }
+        
+        function escapeJson(text) {
+            if (!text) return '';
+            return text
+                .replace(/\\/g, '\\\\')
+                .replace(/"/g, '\\"')
+                .replace(/\n/g, '\\n')
+                .replace(/\r/g, '\\r')
+                .replace(/\t/g, '\\t');
+        }
+        
+        function getTime() {
+            var now = new Date();
+            var h = now.getHours();
+            var m = now.getMinutes();
+            return (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m);
+        }
+        
+        function showStats() {
+            try {
+                var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                xhr.open("GET", API_URL + "/stats", false);
+                xhr.send();
+                
+                if (xhr.status === 200) {
+                    var data = eval('(' + xhr.responseText + ')');
+                    
+                    var emotions = data.recent_emotions || [];
+                    var emotionText = emotions.length > 0 ? emotions.join(', ') : 'none';
+                    
+                    alert(
+                        '📊 CONVERSATION STATISTICS\n\n' +
+                        'Messages: ' + data.message_count + '\n' +
+                        'Duration: ' + data.duration + '\n' +
+                        'Mood trend: ' + data.emotion_trend + '\n' +
+                        'Recent emotions: ' + emotionText
+                    );
+                } else {
+                    alert('Failed to load stats (status: ' + xhr.status + ')');
+                }
+            } catch(e) {
+                alert('Error loading stats: ' + e.message);
+            }
+        }
+        
+        function clearChat() {
+            var confirmed = confirm('Clear conversation history? ARISU will forget everything.');
+            
+            if (confirmed) {
+                try {
+                    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                    xhr.open("POST", API_URL + "/clear", false);
+                    xhr.send();
+                    
+                    if (xhr.status === 200) {
+                        // Clear UI
+                        document.getElementById('chatContainer').innerHTML = '';
+                        document.getElementById('greeting').style.display = 'block';
+                        testConnection();
+                    } else {
+                        alert('Failed to clear history (status: ' + xhr.status + ')');
+                    }
+                } catch(e) {
+                    alert('Error clearing history: ' + e.message);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
