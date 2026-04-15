@@ -20,7 +20,7 @@ echo API is running!
 echo.
 
 echo Launching ARISU Interface...
-start "" "C:\Users\abril\Documents\Vscode\Project\ChatbotAI\ARISU.hta"
+start "" "C:\Users\abril\Documents\VibeCoding\ChatbotAI\ARISU.hta"
 
 echo.
 echo ARISU is now active.

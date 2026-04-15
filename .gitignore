@@ -1,0 +1,7 @@
+API-KEY.txt
+.env
+*.key
+*.pem
+__pycache__/
+Unnecessary/
+arisu_conversation.json
