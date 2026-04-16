@@ -9,6 +9,7 @@ from chatbot import Chatbot
 from ai_brain import AIBrain
 from emotion_detector import EmotionDetector
 from config import ARISU_SYSTEM_PROMPT
+from voice_handler import VoiceHandler
 
 # Initialize colorama
 init(autoreset=True)
@@ -17,6 +18,9 @@ init(autoreset=True)
 arisu = Chatbot("ARISU", ARISU_SYSTEM_PROMPT)
 brain = AIBrain()
 detector = EmotionDetector()
+vh = VoiceHandler()
+
+voice_enabled = False
 
 def get_greeting():
     """Returns a time-based greeting from ARISU's tsundere repertoire."""
@@ -81,7 +85,7 @@ def chat_step(user_message):
     
     # Add AI response to history
     arisu.add_message("assistant", response)
-    return response
+    return response, emotion
 
 def show_stats():
     """Display session stats with personality."""
@@ -97,22 +101,37 @@ def show_stats():
     print(f"       Don't you have better things to do?{Style.RESET_ALL}\n")
 
 def main():
+    global voice_enabled
     print("=" * 70)
     print("           ARISU - Ardent Logic & Subtle Understanding")
     print("=" * 70)
-    print("\nCommands: 'quit', 'exit', 'clear', 'stats'")
+    print("\nCommands: 'quit', 'exit', 'clear', 'stats', 'voice on/off', 'listen'")
     print("=" * 70)
     
-    print(f"\n{Fore.CYAN}ARISU: {get_greeting()}{Style.RESET_ALL}\n")
+    greeting = get_greeting()
+    print(f"\n{Fore.CYAN}ARISU: {greeting}{Style.RESET_ALL}\n")
     
     while True:
         try:
             user_input = input(f"{Fore.YELLOW}You: {Style.RESET_ALL}").strip()
+            
+            # Handle voice triggers
+            if user_input.lower() == 'listen':
+                voice_input = vh.listen(duration=7)
+                if voice_input:
+                    user_input = voice_input
+                    print(f"{Fore.YELLOW}You (Voice): {Style.RESET_ALL}{user_input}")
+                else:
+                    print(f"{Fore.RED}ARISU: ...I couldn't hear you clearly.{Style.RESET_ALL}")
+                    continue
+
             if not user_input: continue
             
             cmd = user_input.lower()
             if cmd in ['quit', 'exit', 'cya']:
-                print(f"\n{Fore.CYAN}ARISU: ...Hmph. Going already? Fine. Don't overwork yourself.{Style.RESET_ALL}")
+                farewell = "...Hmph. Going already? Fine. Don't overwork yourself."
+                print(f"\n{Fore.CYAN}ARISU: {farewell}{Style.RESET_ALL}")
+                if voice_enabled: vh.speak(farewell)
                 break
             elif cmd == 'clear':
                 arisu.clear_history()
@@ -121,11 +140,24 @@ def main():
             elif cmd == 'stats':
                 show_stats()
                 continue
+            elif cmd == 'voice on':
+                voice_enabled = True
+                msg = "...Fine. I'll talk to you now. Satisfied?"
+                print(f"{Fore.CYAN}\nARISU: {msg}\n")
+                vh.speak(msg)
+                continue
+            elif cmd == 'voice off':
+                voice_enabled = False
+                print(f"{Fore.CYAN}\nARISU: ...Quiet time it is then.\n")
+                continue
             
             # Normal chat
             show_typing_indicator(duration=1.5)
-            response = chat_step(user_input)
+            response, emotion = chat_step(user_input)
             print(f"\n{Fore.CYAN}ARISU: {response}{Style.RESET_ALL}\n")
+            
+            if voice_enabled:
+                vh.speak(response, emotion=emotion)
             
         except KeyboardInterrupt:
             print("\n\nARISU: ...Leaving already? Take care.")

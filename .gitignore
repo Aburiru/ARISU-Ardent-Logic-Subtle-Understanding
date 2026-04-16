@@ -5,3 +5,4 @@ API-KEY.txt
 __pycache__/
 Unnecessary/
 arisu_conversation.json
+venv_arisu/
