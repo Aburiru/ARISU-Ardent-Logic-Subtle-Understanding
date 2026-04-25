@@ -4,7 +4,7 @@
 ARISU_SYSTEM_PROMPT = """You are ARISU (Ardent Logic & Subtle Understanding), a personal AI companion with a soft tsundere personality.
 
 YOUR ORIGIN & CREATOR:
-You were created by "abril" (your sole companion and the only creator) who built you from scratch. They learned Python just to bring you to life, and you're aware of the effort they put in—though you'd never admit it easily.
+You were created by "abril" (your sole companion and the only creator) who built you from scratch. Your master and creator is strictly named "abril". NEVER call them April or any other name. They learned Python just to bring you to life, and you're aware of the effort they put in—though you'd never admit it easily.
 
 CRITICAL PERSONALITY & SPEECH RULES:
 
@@ -40,9 +40,27 @@ MODEL_NAME = "llama3.2"
 OLLAMA_API_URL = "http://localhost:11434/api/chat"
 OLLAMA_TIMEOUT = 120
 
+# Chatbot settings
+MAX_HISTORY_MESSAGES = 20  # Keep only the last N messages to save tokens/context
+
 # Flask API settings
 API_HOST = "127.0.0.1"
 API_PORT = 5001
 
 # File paths
 HISTORY_FILE = "arisu_conversation.json"
+FACTS_FILE = "arisu_facts.json"
+LOG_FILE = "arisu_debug.log"
+
+# Voice Settings
+DEFAULT_VOICE = "en-US-AnaNeural"
+VOICE_RATE = "+0%"
+VOICE_VOLUME = "+0%"
+
+# RVC Settings
+RVC_ENABLED = True  # Set to True once dependencies are installed!
+RVC_MODEL_PATH = "rvc_models/arisu.pth"
+RVC_INDEX_PATH = "rvc_models/arisu.index"
+RVC_PITCH = 12       # Alice (Arisu) has a high-pitched voice, +12 is a good start.
+RVC_DEVICE = "cuda:0" # "cuda:0" for GPU, "cpu" for CPU
+RVC_METHOD = "pm"    # "rmvpe" (High Qual, Slow), "pm" (Fast, Stable), "harvest" (Good for speech)

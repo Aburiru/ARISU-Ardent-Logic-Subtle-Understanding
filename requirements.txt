@@ -2,3 +2,13 @@ flask
 flask-cors
 requests
 colorama
+SpeechRecognition
+edge-tts
+sounddevice
+numpy
+scipy
+playsound==1.2.2
+# RVC-related
+torch --index-url https://download.pytorch.org/whl/cu121
+torchaudio --index-url https://download.pytorch.org/whl/cu121
+rvc-python

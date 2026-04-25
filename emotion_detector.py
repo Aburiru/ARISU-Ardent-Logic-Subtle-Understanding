@@ -2,6 +2,7 @@
 
 import re
 from datetime import datetime
+from collections import Counter
 
 class EmotionDetector:
     def __init__(self):
@@ -24,7 +25,7 @@ class EmotionDetector:
             'angry': [
                 'angry', 'mad', 'furious', 'pissed', 'annoyed', 'irritated',
                 'frustrated', 'hate', 'stupid', 'damn', 'wtf', 'annoying',
-                'rage', 'livid', 'infuriating', 'ugh'
+                'rage', 'livid', 'infuriating'
             ],
             'anxious': [
                 'worried', 'anxious', 'nervous', 'scared', 'afraid', 'fear',
@@ -40,10 +41,14 @@ class EmotionDetector:
                 'excited', 'pumped', 'hyped', 'cant wait', "can't wait",
                 'omg', 'wow', 'amazing', 'incredible', 'awesome', 'yes',
                 'finally', 'lets go', "let's go", 'woohoo'
+            ],
+            'stressed': [
+                'deadline', 'urgent', 'asap', 'hurry', 'quick', 'too much',
+                'cannot cope', 'pressure', 'workload'
             ]
         }
         
-        # Emotion history (last 5 messages)
+        # Emotion history (last 10 messages)
         self.emotion_history = []
         
         # Conversation start time
@@ -63,13 +68,13 @@ class EmotionDetector:
         self.message_count += 1
         
         # Dictionary to count emotion indicators
-        emotion_scores = {emotion: 0 for emotion in self.emotions}
+        emotion_scores = {emotion: 0.0 for emotion in self.emotions}
         indicators = []
         
         # 1. CHECK KEYWORDS
         for emotion, keywords in self.emotions.items():
             for keyword in keywords:
-                if keyword in message_lower:
+                if re.search(r'\b' + re.escape(keyword) + r'\b', message_lower):
                     emotion_scores[emotion] += 1
                     indicators.append(f"keyword: '{keyword}'")
         
@@ -79,55 +84,54 @@ class EmotionDetector:
         ellipsis_count = message.count('...')
         
         if exclamation_count >= 2:
-            emotion_scores['excited'] += 2
+            emotion_scores['excited'] += 1.5
+            emotion_scores['angry'] += 0.5
             indicators.append(f"excited punctuation (!!)")
         
         if question_count >= 3:
-            emotion_scores['anxious'] += 1
+            emotion_scores['anxious'] += 1.0
             indicators.append("multiple questions (???)")
         
         if ellipsis_count >= 2:
-            emotion_scores['sad'] += 1
+            emotion_scores['sad'] += 1.0
+            emotion_scores['tired'] += 0.5
             indicators.append("trailing off (...)")
         
         # 3. CHECK CAPS (shouting)
-        caps_ratio = sum(1 for c in message if c.isupper()) / max(len(message), 1)
-        
-        if caps_ratio > 0.5 and len(message) > 5:
-            emotion_scores['angry'] += 2
-            emotion_scores['excited'] += 1
-            indicators.append("CAPS (shouting/excited)")
+        if len(message) > 5:
+            caps_count = sum(1 for c in message if c.isupper())
+            caps_ratio = caps_count / len(message)
+            
+            if caps_ratio > 0.5:
+                emotion_scores['angry'] += 2.0
+                emotion_scores['excited'] += 1.5
+                indicators.append("CAPS (shouting/excited)")
         
         # 4. CHECK MESSAGE LENGTH
-        word_count = len(message.split())
+        words = message.split()
+        word_count = len(words)
         
-        if word_count <= 3:
-            emotion_scores['tired'] += 1
-            emotion_scores['sad'] += 0.5
+        if word_count > 0 and word_count <= 3:
+            emotion_scores['tired'] += 0.5
+            emotion_scores['sad'] += 0.3
             indicators.append("very short message")
         
         elif word_count >= 50:
-            emotion_scores['excited'] += 1
+            emotion_scores['excited'] += 1.0
             emotion_scores['anxious'] += 0.5
-            indicators.append("very long message (rambling/engaged)")
+            indicators.append("very long message")
         
         # 5. CHECK SPECIAL PATTERNS
         # Negative patterns
         if re.search(r"(can't|cannot|won't|don't know|give up)", message_lower):
-            emotion_scores['anxious'] += 1
-            emotion_scores['sad'] += 1
+            emotion_scores['anxious'] += 1.0
+            emotion_scores['sad'] += 0.5
             indicators.append("negative/uncertain language")
         
         # Positive patterns
         if re.search(r"(thank|appreciate|grateful|love it)", message_lower):
-            emotion_scores['happy'] += 2
+            emotion_scores['happy'] += 1.5
             indicators.append("gratitude expression")
-        
-        # Time-related stress
-        if re.search(r"(deadline|urgent|asap|hurry|quick)", message_lower):
-            emotion_scores['anxious'] += 2
-            emotion_scores['stressed'] = emotion_scores.get('stressed', 0) + 2
-            indicators.append("time pressure")
         
         # Find primary emotion
         primary_emotion = max(emotion_scores, key=emotion_scores.get)
@@ -148,8 +152,8 @@ class EmotionDetector:
         
         self.emotion_history.append(emotion_data)
         
-        # Keep only last 5
-        if len(self.emotion_history) > 5:
+        # Keep only last 10
+        if len(self.emotion_history) > 10:
             self.emotion_history.pop(0)
         
         return primary_emotion, intensity, indicators
@@ -162,31 +166,19 @@ class EmotionDetector:
         if not self.emotion_history:
             return "neutral"
         
-        # Count emotions in last 5 messages
-        recent_emotions = [e['emotion'] for e in self.emotion_history]
+        # Count emotions in history
+        recent_emotions = [e['emotion'] for e in self.emotion_history if e['emotion'] != 'neutral']
+        
+        if not recent_emotions:
+            return "neutral"
         
         # Check if consistently one emotion
-        if len(set(recent_emotions)) == 1:
+        if len(set(recent_emotions)) == 1 and len(recent_emotions) >= 3:
             return f"consistently {recent_emotions[0]}"
         
-        # Check for improvement/decline
-        if len(recent_emotions) >= 3:
-            first_half = recent_emotions[:len(recent_emotions)//2]
-            second_half = recent_emotions[len(recent_emotions)//2:]
-            
-            negative_emotions = ['sad', 'angry', 'anxious', 'tired']
-            
-            first_negative = sum(1 for e in first_half if e in negative_emotions)
-            second_negative = sum(1 for e in second_half if e in negative_emotions)
-            
-            if second_negative < first_negative:
-                return "improving mood"
-            elif second_negative > first_negative:
-                return "declining mood"
-        
         # Most common emotion
-        from collections import Counter
-        most_common = Counter(recent_emotions).most_common(1)[0][0]
+        counts = Counter(recent_emotions)
+        most_common = counts.most_common(1)[0][0]
         return f"mostly {most_common}"
     
     def get_conversation_duration(self):

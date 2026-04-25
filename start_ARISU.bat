@@ -14,9 +14,10 @@ echo Ollama is running!
 echo.
 
 echo Starting ARISU API...
-start "" /B python ARISU_api.py
-timeout /t 2 /nobreak > nul
-echo API is running!
+:: Running in a separate window so you can see if it crashes
+start "ARISU API" .\venv_arisu\Scripts\python.exe ARISU_api.py
+timeout /t 5 /nobreak > nul
+echo API window should be open.
 echo.
 
 echo Launching ARISU Interface...
@@ -24,11 +25,6 @@ start "" "C:\Users\abril\Documents\VibeCoding\ChatbotAI\ARISU.hta"
 
 echo.
 echo ARISU is now active.
-echo Close this window to stop the system.
+echo You can close this launcher window.
+echo (The API and Ollama will continue running in the background)
 pause
-
-echo.
-echo Stopping Ollama...
-taskkill /IM ollama.exe /F > nul 2>&1
-taskkill /IM python.exe /F > nul 2>&1
-echo System stopped.

@@ -5,16 +5,30 @@ from datetime import datetime
 import json
 import os
 import random
+import logging
 
 # Import shared modules
 from chatbot import Chatbot
 from ai_brain import AIBrain
 from emotion_detector import EmotionDetector
+from voice_handler import VoiceHandler
+from memory_manager import MemoryManager
 from config import (
     API_HOST, API_PORT, 
-    HISTORY_FILE, 
+    HISTORY_FILE, FACTS_FILE, LOG_FILE,
     ARISU_SYSTEM_PROMPT
 )
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger("ARISU_API")
 
 app = Flask(__name__)
 CORS(app)  # Allow HTA to access API
@@ -23,6 +37,25 @@ CORS(app)  # Allow HTA to access API
 arisu = Chatbot("ARISU", ARISU_SYSTEM_PROMPT)
 brain = AIBrain()
 detector = EmotionDetector()
+voice = VoiceHandler()
+memory = MemoryManager()
+
+def extract_facts(user_message, ai_response):
+    """Simple rule-based fact extraction"""
+    import re
+    # Patterns for user telling things to ARISU
+    user_patterns = [
+        r"(?:remember that|my favorite|i like|i love) (.*)",
+        r"i am (?:a|an) (.*)",
+        r"i work as (?:a|an) (.*)"
+    ]
+    
+    for pattern in user_patterns:
+        match = re.search(pattern, user_message, re.IGNORECASE)
+        if match:
+            fact = match.group(1).strip()
+            fact = re.sub(r'[?.!]$', '', fact)
+            memory.add_fact("user_facts", fact)
 
 def load_history():
     """Load conversation history from file"""
@@ -33,21 +66,23 @@ def load_history():
                 arisu.conversation_history = data.get('messages', [])
                 detector.message_count = data.get('message_count', 0)
                 detector.emotion_history = data.get('emotions', [])
+            logger.info(f"Successfully loaded history from {HISTORY_FILE}")
         except Exception as e:
-            print(f"⚠️ History load error: {e}")
+            logger.error(f"History load error: {e}")
 
 def save_history():
     """Save conversation history to file"""
     data = {
         'messages': arisu.conversation_history,
         'message_count': detector.message_count,
-        'emotions': detector.emotion_history
+        'emotions': detector.emotion_history,
+        'last_updated': datetime.now().isoformat()
     }
     try:
         with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
     except Exception as e:
-        print(f"⚠️ History save error: {e}")
+        logger.error(f"History save error: {e}")
 
 # Load history on startup
 load_history()
@@ -62,46 +97,69 @@ def chat():
         if not user_message:
             return jsonify({'error': 'Empty message'}), 400
         
+        logger.info(f"User: {user_message[:50]}...")
+        
         # 1. Detect emotion
         emotion, intensity, indicators = detector.detect_emotion(user_message)
+        logger.info(f"Detected emotion: {emotion} (intensity: {intensity})")
         
         # 2. Add message to history
         arisu.add_message("user", user_message)
         
-        # 3. Get response with context and emotion hint
-        emotion_hint = None
-        if emotion != 'neutral' and intensity > 0:
-            emotion_hint = f"[User seems {emotion} (intensity: {intensity}). Respond accordingly.]"
+        # 3. Get response with context, memory, and emotion hint
+        facts_summary = memory.get_facts_summary()
+        
+        emotion_hint = facts_summary # Inject facts first
+        if emotion != 'neutral' and intensity >= 1.0:
+            emotion_hint += f"\n[System Note: User seems {emotion}. Intensity: {intensity:.1f}. Respond with your tsundere personality, but acknowledge this emotional state.]"
         
         context = arisu.get_full_context(emotion_hint=emotion_hint)
         response = brain.chat(context)
         
+        # 4. Extract new facts to remember for next time
+        extract_facts(user_message, response)
+        
         # 4. Add response to history
         arisu.add_message("assistant", response)
-        
-        # 5. Save and return
+
+        # 5. Speak response in background thread (so text appears first)
+        import threading
+        def handle_speech():
+            try:
+                voice.speak(response, emotion)
+            except Exception as ve:
+                logger.error(f"Voice error: {ve}")
+
+        threading.Thread(target=handle_speech, daemon=True).start()
+
+        # 6. Save and return
         save_history()
+        
+        logger.info(f"ARISU: {response[:50]}...")
         
         return jsonify({
             'response': response,
             'emotion': emotion if emotion != 'neutral' else None,
-            'intensity': intensity,
-            'timestamp': datetime.now().strftime("%H:%M")
+            'intensity': round(intensity, 2),
+            'timestamp': datetime.now().strftime("%H:%M"),
+            'debug': {
+                'indicators': indicators,
+                'trend': detector.get_emotion_trend()
+            }
         })
     
     except Exception as e:
-        print(f"❌ Error in /api/chat: {e}")
+        logger.exception(f"Error in /api/chat: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/stats', methods=['GET'])
 def get_stats():
-    """Get conversation statistics (FIXED version)"""
+    """Get conversation statistics"""
     try:
-        # Get stats directly from detector
         stats = detector.get_stats()
         return jsonify(stats)
     except Exception as e:
-        print(f"❌ Error in /api/stats: {e}")
+        logger.error(f"Error in /api/stats: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/clear', methods=['POST'])
@@ -113,8 +171,10 @@ def clear_history():
         detector.message_count = 0
         detector.emotion_history = []
         save_history()
+        logger.info("Conversation history cleared.")
         return jsonify({'success': True})
     except Exception as e:
+        logger.error(f"Error in /api/clear: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/greeting', methods=['GET'])
@@ -138,11 +198,29 @@ def get_history():
     """Get full conversation history"""
     return jsonify({'messages': arisu.conversation_history})
 
+@app.route('/api/status', methods=['GET'])
+def get_status():
+    """Check API and Brain status"""
+    # Simple check for Ollama would be good here but might be slow
+    return jsonify({
+        'status': 'online',
+        'model': brain.model,
+        'uptime': detector.get_conversation_duration()[1]
+    })
+
+@app.route('/api/shutdown', methods=['POST'])
+def shutdown():
+    """Shutdown the API server and exit"""
+    logger.info("Shutdown request received. Exiting...")
+    os._exit(0) # Forcefully exit the process and all threads
+    return jsonify({'success': True})
+
 if __name__ == '__main__':
     print("\n" + "="*60)
-    print("     ✦ ARISU API Server (Refactored)")
+    print("     ARISU API Server (Improved)")
     print("="*60)
-    print(f"\n✅ API running on http://{API_HOST}:{API_PORT}")
-    print("🚀 Now launch ARISU.hta\n")
+    print(f"\nAPI running on http://{API_HOST}:{API_PORT}")
+    print(f"Logs being written to {LOG_FILE}")
+    print("Now launch ARISU.hta\n")
     
     app.run(host=API_HOST, port=API_PORT, debug=False)

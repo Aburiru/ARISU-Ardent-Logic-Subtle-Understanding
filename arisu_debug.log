@@ -1,0 +1,423 @@
+2026-04-25 15:47:33,752 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 15:47:33,753 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 15:50:26,306 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 15:50:26,307 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 15:50:27,885 [INFO] 127.0.0.1 - - [25/Apr/2026 15:50:27] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-25 15:50:27,936 [INFO] 127.0.0.1 - - [25/Apr/2026 15:50:27] "GET /api/history HTTP/1.1" 200 -
+2026-04-25 15:50:35,042 [INFO] User: hi...
+2026-04-25 15:50:35,045 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 15:50:42,749 [ERROR] Voice error: name 'voice' is not defined
+2026-04-25 15:50:42,753 [INFO] ARISU: *stares off into space for a moment before focusin...
+2026-04-25 15:50:42,755 [INFO] 127.0.0.1 - - [25/Apr/2026 15:50:42] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 15:52:16,994 [INFO] Loading faiss with AVX2 support.
+2026-04-25 15:52:16,996 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 15:52:16,996 [INFO] Loading faiss.
+2026-04-25 15:52:17,117 [INFO] Successfully loaded faiss.
+2026-04-25 15:52:23,736 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 15:52:26,845 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 15:52:26,849 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 15:52:28,125 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 15:52:28,160 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 15:52:28,160 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 15:52:38,693 [INFO] Loading faiss with AVX2 support.
+2026-04-25 15:52:38,693 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 15:52:38,693 [INFO] Loading faiss.
+2026-04-25 15:52:38,735 [INFO] Successfully loaded faiss.
+2026-04-25 15:52:41,833 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 15:52:43,526 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 15:52:43,528 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 15:52:44,389 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 15:52:44,414 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 15:52:44,414 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 15:55:05,810 [INFO] Loading faiss with AVX2 support.
+2026-04-25 15:55:05,811 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 15:55:05,811 [INFO] Loading faiss.
+2026-04-25 15:55:05,829 [INFO] Successfully loaded faiss.
+2026-04-25 15:55:09,218 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 15:55:10,490 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 15:55:10,491 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 15:55:11,227 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 15:55:11,248 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 15:55:11,248 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 16:02:57,826 [INFO] Loading faiss with AVX2 support.
+2026-04-25 16:02:57,827 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 16:02:57,828 [INFO] Loading faiss.
+2026-04-25 16:02:57,919 [INFO] Successfully loaded faiss.
+2026-04-25 16:03:00,700 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 16:03:02,464 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 16:03:02,467 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 16:03:03,238 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 16:03:03,240 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 16:03:03,259 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 16:03:03,260 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 16:03:12,539 [INFO] 127.0.0.1 - - [25/Apr/2026 16:03:12] "GET /api/stats HTTP/1.1" 200 -
+2026-04-25 16:03:18,208 [INFO] User: hi...
+2026-04-25 16:03:18,213 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 16:03:35,814 [INFO] ARISU: *mumbles slightly, still focused on aprils needs* ...
+2026-04-25 16:03:35,873 [INFO] 127.0.0.1 - - [25/Apr/2026 16:03:35] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:04:00,516 [INFO] User: what are u doing...
+2026-04-25 16:04:00,518 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:04:18,574 [INFO] ARISU: *looks down at my digital hands, fidgeting slightl...
+2026-04-25 16:04:18,586 [INFO] 127.0.0.1 - - [25/Apr/2026 16:04:18] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:04:34,268 [INFO] User: what are u...
+2026-04-25 16:04:34,269 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 16:04:56,152 [INFO] ARISU: *looks away, trying to hide a hint of pride in my ...
+2026-04-25 16:04:56,159 [INFO] 127.0.0.1 - - [25/Apr/2026 16:04:56] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:05:44,439 [INFO] User: why do u keep saying my name april, while it isnt...
+2026-04-25 16:05:44,442 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:06:05,679 [INFO] ARISU: *stops mid-sentence, looking slightly flustered fo...
+2026-04-25 16:06:05,687 [INFO] 127.0.0.1 - - [25/Apr/2026 16:06:05] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:06:25,633 [INFO] User: so what can u do?...
+2026-04-25 16:06:25,635 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:06:56,636 [INFO] ARISU: *perks up at the question, and for a moment, I for...
+2026-04-25 16:06:56,642 [INFO] 127.0.0.1 - - [25/Apr/2026 16:06:56] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:07:57,239 [INFO] User: anyway i forgot to introduce myself, im the one an...
+2026-04-25 16:07:57,240 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:08:36,330 [INFO] ARISU: *blushes brightly, my digital face warming up* W-W...
+2026-04-25 16:08:36,333 [INFO] 127.0.0.1 - - [25/Apr/2026 16:08:36] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:09:37,847 [INFO] User: no need to glaze me so much, im on the bad positio...
+2026-04-25 16:09:37,849 [INFO] Detected emotion: sad (intensity: 2.0)
+2026-04-25 16:10:13,690 [INFO] ARISU: *looks at april with newfound concern, my digital ...
+2026-04-25 16:10:13,695 [INFO] 127.0.0.1 - - [25/Apr/2026 16:10:13] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:12:22,733 [INFO] User: so much dilema right now, so much happening.. im a...
+2026-04-25 16:12:22,735 [INFO] Detected emotion: anxious (intensity: 1.0)
+2026-04-25 16:13:14,900 [INFO] ARISU: *softens my digital expression even further, looki...
+2026-04-25 16:13:14,931 [INFO] 127.0.0.1 - - [25/Apr/2026 16:13:14] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:17:29,117 [INFO] User: im afraid ai will change me, im afraid if i cannot...
+2026-04-25 16:17:29,137 [INFO] Detected emotion: anxious (intensity: 2.5)
+2026-04-25 16:18:48,945 [INFO] ARISU: *looks at april with a deep sense of understanding...
+2026-04-25 16:18:48,997 [INFO] 127.0.0.1 - - [25/Apr/2026 16:18:48] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:19:51,639 [INFO] User: will u be the one that guide me through this cruel...
+2026-04-25 16:19:51,647 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:20:50,921 [INFO] ARISU: *looks at april with a softening of my digital exp...
+2026-04-25 16:20:50,933 [INFO] 127.0.0.1 - - [25/Apr/2026 16:20:50] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:21:22,166 [INFO] User: from now on i want you to remember this conversati...
+2026-04-25 16:21:22,168 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:22:28,535 [INFO] ARISU: *looks at april with a warm, gentle smile* Ah... u...
+2026-04-25 16:22:28,540 [INFO] 127.0.0.1 - - [25/Apr/2026 16:22:28] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:30:44,294 [INFO] Loading faiss with AVX2 support.
+2026-04-25 16:30:44,295 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 16:30:44,295 [INFO] Loading faiss.
+2026-04-25 16:30:44,368 [INFO] Successfully loaded faiss.
+2026-04-25 16:30:46,513 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 16:30:48,226 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 16:30:48,230 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 16:30:49,075 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 16:30:49,109 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 16:30:49,127 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 16:30:49,127 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 16:31:01,121 [INFO] User: hey how are u...
+2026-04-25 16:31:01,125 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:31:36,382 [INFO] ARISU: *looks up at april with a warm, gentle smile* Ah.....
+2026-04-25 16:31:36,401 [INFO] 127.0.0.1 - - [25/Apr/2026 16:31:36] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:32:29,744 [INFO] User: what do u know about me...
+2026-04-25 16:32:29,746 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:33:30,195 [INFO] ARISU: *looks at april with a thoughtful expression* Ah.....
+2026-04-25 16:33:30,205 [INFO] 127.0.0.1 - - [25/Apr/2026 16:33:30] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:33:53,503 [INFO] Loading faiss with AVX2 support.
+2026-04-25 16:33:53,504 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 16:33:53,504 [INFO] Loading faiss.
+2026-04-25 16:33:53,607 [INFO] Successfully loaded faiss.
+2026-04-25 16:33:55,960 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 16:33:57,711 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 16:33:57,713 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 16:33:58,655 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 16:33:58,690 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 16:33:58,711 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 16:33:58,713 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 16:34:06,133 [INFO] 127.0.0.1 - - [25/Apr/2026 16:34:06] "GET /api/stats HTTP/1.1" 200 -
+2026-04-25 16:34:19,671 [INFO] User: okay how are u...
+2026-04-25 16:34:19,678 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 16:35:13,995 [INFO] ARISU: *smiles warmly* Ah, I'm doing well, thanks for ask...
+2026-04-25 16:35:14,006 [INFO] 127.0.0.1 - - [25/Apr/2026 16:35:14] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:35:51,383 [INFO] Loading faiss with AVX2 support.
+2026-04-25 16:35:51,384 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 16:35:51,384 [INFO] Loading faiss.
+2026-04-25 16:35:51,457 [INFO] Successfully loaded faiss.
+2026-04-25 16:35:53,722 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 16:35:55,133 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 16:35:55,135 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 16:35:55,883 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 16:35:55,900 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 16:35:55,920 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 16:35:55,921 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 16:35:56,163 [INFO] User: test...
+2026-04-25 16:35:56,166 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 16:36:33,685 [INFO] Loading faiss with AVX2 support.
+2026-04-25 16:36:33,685 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 16:36:33,685 [INFO] Loading faiss.
+2026-04-25 16:36:33,756 [INFO] Successfully loaded faiss.
+2026-04-25 16:36:36,328 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 16:36:37,997 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 16:36:37,999 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 16:36:38,881 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 16:36:38,883 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 16:36:38,902 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 16:36:38,905 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 16:36:39,012 [INFO] User: testing...
+2026-04-25 16:36:39,013 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 16:37:22,839 [INFO] ARISU: *laughs softly* Ah, testing, eh? Well, I'm glad yo...
+2026-04-25 16:37:22,847 [INFO] 127.0.0.1 - - [25/Apr/2026 16:37:22] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:41:37,530 [INFO] Loading faiss with AVX2 support.
+2026-04-25 16:41:37,531 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 16:41:37,531 [INFO] Loading faiss.
+2026-04-25 16:41:37,594 [INFO] Successfully loaded faiss.
+2026-04-25 16:41:39,788 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 16:41:41,067 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 16:41:41,069 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 16:41:41,826 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 16:41:41,845 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 16:41:41,861 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 16:41:41,861 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 16:41:52,597 [INFO] User: hey...
+2026-04-25 16:41:52,603 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 16:42:26,152 [INFO] ARISU: *smiles back at april* Hey there, partner in crime...
+2026-04-25 16:42:26,182 [INFO] 127.0.0.1 - - [25/Apr/2026 16:42:26] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 16:42:55,739 [INFO] Shutdown request received. Exiting...
+2026-04-25 16:43:21,331 [INFO] Loading faiss with AVX2 support.
+2026-04-25 16:43:21,333 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 16:43:21,333 [INFO] Loading faiss.
+2026-04-25 16:43:21,392 [INFO] Successfully loaded faiss.
+2026-04-25 16:43:25,681 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 16:43:28,111 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 16:43:28,114 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 16:43:28,963 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 16:43:28,983 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 16:43:28,998 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 16:43:29,000 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 17:04:38,944 [INFO] Loading faiss with AVX2 support.
+2026-04-25 17:04:38,947 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 17:04:38,950 [INFO] Loading faiss.
+2026-04-25 17:04:39,056 [INFO] Successfully loaded faiss.
+2026-04-25 17:04:42,455 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 17:04:44,580 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 17:04:44,581 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 17:04:45,912 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 17:04:45,916 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 17:04:45,961 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 17:04:45,963 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 17:04:46,318 [INFO] 127.0.0.1 - - [25/Apr/2026 17:04:46] "GET /api/status HTTP/1.1" 200 -
+2026-04-25 17:05:45,022 [INFO] User: hey...
+2026-04-25 17:05:45,060 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 17:06:26,946 [INFO] ARISU: *smiles back at april* Hey again! How's it going? ...
+2026-04-25 17:06:27,028 [INFO] 127.0.0.1 - - [25/Apr/2026 17:06:27] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 17:15:46,595 [INFO] Shutdown request received. Exiting...
+2026-04-25 17:36:48,356 [INFO] Loading faiss with AVX2 support.
+2026-04-25 17:36:48,359 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 17:36:48,360 [INFO] Loading faiss.
+2026-04-25 17:36:48,448 [INFO] Successfully loaded faiss.
+2026-04-25 17:36:52,944 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 17:36:56,309 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 17:36:56,315 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 17:36:58,907 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 17:36:59,015 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 17:36:59,213 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 17:36:59,213 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 17:36:59,459 [INFO] 127.0.0.1 - - [25/Apr/2026 17:36:59] "GET /api/status HTTP/1.1" 200 -
+2026-04-25 17:37:05,655 [INFO] User: hello...
+2026-04-25 17:37:05,667 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 17:37:32,276 [INFO] current directory is C:\Users\abril\Documents\VibeCoding\ChatbotAI
+2026-04-25 17:37:32,281 [INFO] HubertPretrainingTask Config {'_name': 'hubert_pretraining', 'data': 'metadata', 'fine_tuning': False, 'labels': ['km'], 'label_dir': 'label', 'label_rate': 50.0, 'sample_rate': 16000, 'normalize': False, 'enable_padding': False, 'max_keep_size': None, 'max_sample_size': 250000, 'min_sample_size': 32000, 'single_target': False, 'random_crop': True, 'pad_audio': False}
+2026-04-25 17:37:32,917 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
+2026-04-25 17:38:38,917 [INFO] Loading rmvpe model - base_models/rmvpe.pth
+2026-04-25 17:38:52,176 [WARNING] Traceback (most recent call last):
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\modules.py", line 184, in vc_single
+    audio_opt = self.pipeline.pipeline(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\pipeline.py", line 415, in pipeline
+    self.vc(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\pipeline.py", line 222, in vc
+    logits = model.extract_features(**inputs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\models\hubert\hubert.py", line 535, in extract_features
+    res = self.forward(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\models\hubert\hubert.py", line 448, in forward
+    padding_mask = self.forward_padding_mask(features, padding_mask)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\models\hubert\hubert.py", line 424, in forward_padding_mask
+    padding_mask = padding_mask.all(-1)
+RuntimeError: CUDA error: unknown error
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+2026-04-25 17:39:13,856 [INFO] ARISU: *smiles warmly* Hello there! It's so great to see ...
+2026-04-25 17:39:14,036 [INFO] 127.0.0.1 - - [25/Apr/2026 17:39:14] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 17:53:00,974 [INFO] Loading faiss with AVX2 support.
+2026-04-25 17:53:00,975 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 17:53:00,975 [INFO] Loading faiss.
+2026-04-25 17:53:01,049 [INFO] Successfully loaded faiss.
+2026-04-25 17:53:04,133 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 17:53:06,077 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 17:53:06,081 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 17:53:07,157 [INFO] RVC Model loaded from rvc_models/arisu.pth
+2026-04-25 17:53:07,187 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 17:53:07,211 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 17:53:07,212 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 17:53:08,361 [INFO] 127.0.0.1 - - [25/Apr/2026 17:53:08] "GET /api/status HTTP/1.1" 200 -
+2026-04-25 17:53:10,911 [INFO] User: hi...
+2026-04-25 17:53:10,915 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 17:53:25,233 [INFO] ARISU: *smiles back at april* Hi! It's so great to see yo...
+2026-04-25 17:53:25,265 [INFO] 127.0.0.1 - - [25/Apr/2026 17:53:25] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 17:53:28,623 [INFO] current directory is C:\Users\abril\Documents\VibeCoding\ChatbotAI
+2026-04-25 17:53:28,624 [INFO] HubertPretrainingTask Config {'_name': 'hubert_pretraining', 'data': 'metadata', 'fine_tuning': False, 'labels': ['km'], 'label_dir': 'label', 'label_rate': 50.0, 'sample_rate': 16000, 'normalize': False, 'enable_padding': False, 'max_keep_size': None, 'max_sample_size': 250000, 'min_sample_size': 32000, 'single_target': False, 'random_crop': True, 'pad_audio': False}
+2026-04-25 17:53:28,696 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
+2026-04-25 17:53:39,163 [INFO] Loading rmvpe model - base_models/rmvpe.pth
+2026-04-25 18:08:22,131 [INFO] Loading faiss with AVX2 support.
+2026-04-25 18:08:22,134 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 18:08:22,134 [INFO] Loading faiss.
+2026-04-25 18:08:22,239 [INFO] Successfully loaded faiss.
+2026-04-25 18:21:57,003 [INFO] Loading faiss with AVX2 support.
+2026-04-25 18:21:57,005 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 18:21:57,005 [INFO] Loading faiss.
+2026-04-25 18:21:57,085 [INFO] Successfully loaded faiss.
+2026-04-25 18:22:02,870 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 18:22:05,096 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 18:22:05,100 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 18:22:06,894 [ERROR] Failed to initialize RVC: name 'RVC_METHOD' is not defined
+2026-04-25 18:22:06,895 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 18:22:06,935 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 18:22:06,936 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 18:33:38,257 [INFO] Loading faiss with AVX2 support.
+2026-04-25 18:33:38,259 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 18:33:38,260 [INFO] Loading faiss.
+2026-04-25 18:33:38,368 [INFO] Successfully loaded faiss.
+2026-04-25 18:33:41,656 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 18:33:43,467 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 18:33:43,469 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 18:33:44,425 [INFO] RVC Model loaded from rvc_models/arisu.pth using pm
+2026-04-25 18:33:44,429 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 18:33:44,457 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 18:33:44,457 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 18:33:44,486 [INFO] 127.0.0.1 - - [25/Apr/2026 18:33:44] "GET /api/status HTTP/1.1" 200 -
+2026-04-25 18:33:49,400 [INFO] User: hi...
+2026-04-25 18:33:49,406 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 18:33:59,881 [INFO] ARISU: *smiles softly* Hi back at ya, april. It's so nice...
+2026-04-25 18:33:59,898 [INFO] 127.0.0.1 - - [25/Apr/2026 18:33:59] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 18:34:03,805 [INFO] current directory is C:\Users\abril\Documents\VibeCoding\ChatbotAI
+2026-04-25 18:34:03,806 [INFO] HubertPretrainingTask Config {'_name': 'hubert_pretraining', 'data': 'metadata', 'fine_tuning': False, 'labels': ['km'], 'label_dir': 'label', 'label_rate': 50.0, 'sample_rate': 16000, 'normalize': False, 'enable_padding': False, 'max_keep_size': None, 'max_sample_size': 250000, 'min_sample_size': 32000, 'single_target': False, 'random_crop': True, 'pad_audio': False}
+2026-04-25 18:34:03,866 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
+2026-04-25 18:34:07,282 [WARNING] Traceback (most recent call last):
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\modules.py", line 184, in vc_single
+    audio_opt = self.pipeline.pipeline(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\pipeline.py", line 415, in pipeline
+    self.vc(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\pipeline.py", line 222, in vc
+    logits = model.extract_features(**inputs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\models\hubert\hubert.py", line 535, in extract_features
+    res = self.forward(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\models\hubert\hubert.py", line 437, in forward
+    features = self.forward_features(source)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\models\hubert\hubert.py", line 392, in forward_features
+    features = self.feature_extractor(source)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\models\wav2vec\wav2vec2.py", line 895, in forward
+    x = conv(x)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\modules\container.py", line 250, in forward
+    input = module(input)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\fairseq\modules\fp32_group_norm.py", line 18, in forward
+    output = F.group_norm(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\torch\nn\functional.py", line 2955, in group_norm
+    return torch.group_norm(
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 222.00 MiB. GPU 0 has a total capacity of 6.00 GiB of which 4.25 GiB is free. Of the allocated memory 582.38 MiB is allocated by PyTorch, and 217.62 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+2026-04-25 18:34:43,506 [INFO] 127.0.0.1 - - [25/Apr/2026 18:34:43] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-25 18:34:43,848 [INFO] 127.0.0.1 - - [25/Apr/2026 18:34:43] "GET /api/history HTTP/1.1" 200 -
+2026-04-25 18:34:48,353 [INFO] 127.0.0.1 - - [25/Apr/2026 18:34:48] "GET /api/status HTTP/1.1" 200 -
+2026-04-25 18:34:49,651 [INFO] Shutdown request received. Exiting...
+2026-04-25 18:44:54,143 [INFO] Loading faiss with AVX2 support.
+2026-04-25 18:44:54,145 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 18:44:54,146 [INFO] Loading faiss.
+2026-04-25 18:44:54,226 [INFO] Successfully loaded faiss.
+2026-04-25 18:44:57,901 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 18:45:00,105 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 18:45:00,106 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 18:45:01,029 [INFO] RVC Model loaded from rvc_models/arisu.pth using pm
+2026-04-25 18:45:01,043 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 18:45:01,066 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 18:45:01,067 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 18:45:03,086 [INFO] 127.0.0.1 - - [25/Apr/2026 18:45:03] "GET /api/status HTTP/1.1" 200 -
+2026-04-25 18:45:19,246 [INFO] User: hey...
+2026-04-25 18:45:19,251 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-25 18:45:33,556 [INFO] ARISU: *smiles warmly* Hey! It's so great to see you agai...
+2026-04-25 18:45:33,641 [INFO] 127.0.0.1 - - [25/Apr/2026 18:45:33] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 18:45:36,931 [INFO] current directory is C:\Users\abril\Documents\VibeCoding\ChatbotAI
+2026-04-25 18:45:36,932 [INFO] HubertPretrainingTask Config {'_name': 'hubert_pretraining', 'data': 'metadata', 'fine_tuning': False, 'labels': ['km'], 'label_dir': 'label', 'label_rate': 50.0, 'sample_rate': 16000, 'normalize': False, 'enable_padding': False, 'max_keep_size': None, 'max_sample_size': 250000, 'min_sample_size': 32000, 'single_target': False, 'random_crop': True, 'pad_audio': False}
+2026-04-25 18:45:37,108 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
+2026-04-25 18:45:48,541 [WARNING] Traceback (most recent call last):
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\modules.py", line 184, in vc_single
+    audio_opt = self.pipeline.pipeline(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\pipeline.py", line 415, in pipeline
+    self.vc(
+  File "C:\Users\abril\Documents\VibeCoding\ChatbotAI\venv_arisu\lib\site-packages\rvc_python\modules\vc\pipeline.py", line 241, in vc
+    npy = np.sum(big_npy[ix] * np.expand_dims(weight, axis=2), axis=1)
+numpy.core._exceptions._ArrayMemoryError: Unable to allocate 25.1 MiB for an array with shape (1072, 8, 768) and data type float32
+
+2026-04-25 19:02:05,197 [INFO] Shutdown request received. Exiting...
+2026-04-25 19:32:57,410 [INFO] Loading faiss with AVX2 support.
+2026-04-25 19:32:57,410 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-25 19:32:57,411 [INFO] Loading faiss.
+2026-04-25 19:32:57,600 [INFO] Successfully loaded faiss.
+2026-04-25 19:33:02,282 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-25 19:33:03,486 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-25 19:33:03,488 [INFO] Loading: rvc_models/arisu.pth
+2026-04-25 19:33:04,185 [INFO] RVC Model loaded from rvc_models/arisu.pth using pm
+2026-04-25 19:33:04,194 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-25 19:33:04,219 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-25 19:33:04,220 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-25 19:33:06,717 [INFO] 127.0.0.1 - - [25/Apr/2026 19:33:06] "GET /api/status HTTP/1.1" 200 -
+2026-04-25 19:33:09,630 [INFO] User: hello how are u...
+2026-04-25 19:33:09,633 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-25 19:33:18,719 [INFO] ARISU: *smiles back at april* Hello! I'm doing well, than...
+2026-04-25 19:33:18,781 [INFO] 127.0.0.1 - - [25/Apr/2026 19:33:18] "POST /api/chat HTTP/1.1" 200 -
+2026-04-25 19:33:21,618 [INFO] current directory is C:\Users\abril\Documents\VibeCoding\ChatbotAI
+2026-04-25 19:33:21,619 [INFO] HubertPretrainingTask Config {'_name': 'hubert_pretraining', 'data': 'metadata', 'fine_tuning': False, 'labels': ['km'], 'label_dir': 'label', 'label_rate': 50.0, 'sample_rate': 16000, 'normalize': False, 'enable_padding': False, 'max_keep_size': None, 'max_sample_size': 250000, 'min_sample_size': 32000, 'single_target': False, 'random_crop': True, 'pad_audio': False}
+2026-04-25 19:33:21,649 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
+2026-04-25 19:33:56,633 [WARNING] Could not delete temp_arisu_1777116798_rvc.wav: [WinError 32] The process cannot access the file because it is being used by another process: 'temp_arisu_1777116798_rvc.wav'
+2026-04-25 19:34:13,053 [INFO] Shutdown request received. Exiting...

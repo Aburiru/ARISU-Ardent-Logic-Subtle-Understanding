@@ -2,6 +2,7 @@
 
 import requests
 import json
+from config import MODEL_NAME, OLLAMA_API_URL, OLLAMA_TIMEOUT
 
 class AIBrain:
     def __init__(self):
@@ -9,8 +10,8 @@ class AIBrain:
         Initialize connection to Ollama (runs locally on your computer)
         No API key needed!
         """
-        self.api_url = "http://localhost:11434/api/chat"
-        self.model = "llama3.2"
+        self.api_url = OLLAMA_API_URL
+        self.model = MODEL_NAME
     
     def chat(self, messages):
         """
@@ -32,12 +33,10 @@ class AIBrain:
         }
         
         try:
-            print(end="", flush=True)
-            
             response = requests.post(
                 self.api_url,
                 json=payload,
-                timeout=120  # AI running locally can take time
+                timeout=OLLAMA_TIMEOUT
             )
             
             if response.status_code == 200:
@@ -47,16 +46,16 @@ class AIBrain:
                 if "message" in result and "content" in result["message"]:
                     return result["message"]["content"].strip()
                 else:
-                    return f"Unexpected format: {result}"
+                    return f"Unexpected format from Ollama: {result}"
             
             else:
-                return f"Error {response.status_code}: {response.text}"
+                return f"Ollama Error {response.status_code}: {response.text}"
         
         except requests.exceptions.ConnectionError:
-            return "❌ Ollama isn't running. Open Command Prompt and type: ollama serve"
+            return "❌ Ollama isn't running. Please ensure Ollama is installed and running (`ollama serve`)."
         
         except requests.exceptions.Timeout:
-            return "The response took too long. Ollama might be processing."
+            return "The AI is taking too long to respond. Ollama might be overloaded or the model is too large for your hardware."
         
         except Exception as e:
-            return f"Error: {str(e)}"
+            return f"Brain Error: {str(e)}"
