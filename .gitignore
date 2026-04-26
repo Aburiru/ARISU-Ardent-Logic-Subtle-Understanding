@@ -1,9 +1,29 @@
+# Security & Personal Data
 API-KEY.txt
 .env
 *.key
 *.pem
-__pycache__/
-Unnecessary/
 arisu_conversation.json
+arisu_facts.json
+arisu_debug.log
+
+# Large Binaries & Models
+rvc_models/
+*.pth
+*.index
+
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
 venv_arisu/
+.venv/
+
+# System & Temp
+Unnecessary/
+temp_arisu_*
+*.mp3
+*.wav
 EVOLUTION.md
+.DS_Store
+Thumbs.db
