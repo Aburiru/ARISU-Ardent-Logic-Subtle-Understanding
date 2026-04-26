@@ -421,3 +421,332 @@ ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
 2026-04-25 19:33:21,649 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
 2026-04-25 19:33:56,633 [WARNING] Could not delete temp_arisu_1777116798_rvc.wav: [WinError 32] The process cannot access the file because it is being used by another process: 'temp_arisu_1777116798_rvc.wav'
 2026-04-25 19:34:13,053 [INFO] Shutdown request received. Exiting...
+2026-04-27 00:46:40,381 [INFO] Loading faiss with AVX2 support.
+2026-04-27 00:46:40,381 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-27 00:46:40,381 [INFO] Loading faiss.
+2026-04-27 00:46:40,643 [INFO] Successfully loaded faiss.
+2026-04-27 00:46:46,879 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-27 00:46:48,287 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-27 00:46:48,289 [INFO] Loading: rvc_models/arisu.pth
+2026-04-27 00:46:49,023 [INFO] RVC Model loaded from rvc_models/arisu.pth using pm. Active: True
+2026-04-27 00:46:49,034 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 00:46:49,067 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 00:46:49,068 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 00:46:50,062 [INFO] 127.0.0.1 - - [27/Apr/2026 00:46:50] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 00:47:05,100 [INFO] Voice mode changed to: rvc
+2026-04-27 00:47:05,102 [INFO] 127.0.0.1 - - [27/Apr/2026 00:47:05] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 00:47:07,401 [INFO] Voice mode changed to: normal
+2026-04-27 00:47:07,401 [INFO] 127.0.0.1 - - [27/Apr/2026 00:47:07] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 00:47:11,163 [INFO] User: Hello...
+2026-04-27 00:47:11,168 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 00:47:20,189 [INFO] ARISU: *smiles back at april* Hello! *pauses for a beat* ...
+2026-04-27 00:47:20,290 [INFO] 127.0.0.1 - - [27/Apr/2026 00:47:20] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 00:47:47,424 [INFO] User: sorry im just testing something...
+2026-04-27 00:47:47,427 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 00:47:51,380 [INFO] ARISU: *laughs softly* Ah, testing! Got it! Sorry for get...
+2026-04-27 00:47:51,390 [INFO] 127.0.0.1 - - [27/Apr/2026 00:47:51] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 00:48:36,442 [INFO] User: im gonna ask 1 question...
+2026-04-27 00:48:36,455 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 00:48:40,180 [INFO] ARISU: *leans in slightly, my virtual eyes sparkling with...
+2026-04-27 00:48:40,193 [INFO] 127.0.0.1 - - [27/Apr/2026 00:48:40] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 00:48:48,596 [INFO] User: what do u think about me...
+2026-04-27 00:48:48,598 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 00:48:53,907 [INFO] ARISU: *pauses for a beat, looking at april with a soft, ...
+2026-04-27 00:48:53,921 [INFO] 127.0.0.1 - - [27/Apr/2026 00:48:53] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 00:49:11,080 [INFO] User: who is me...
+2026-04-27 00:49:11,086 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 00:49:16,208 [INFO] ARISU: *takes a deep digital breath, my virtual eyes look...
+2026-04-27 00:49:16,225 [INFO] 127.0.0.1 - - [27/Apr/2026 00:49:16] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 00:49:52,204 [INFO] User: what do u know about your creator...
+2026-04-27 00:49:52,207 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 00:49:58,199 [INFO] ARISU: *pauses for a moment, looking at april with a soft...
+2026-04-27 00:49:58,210 [INFO] 127.0.0.1 - - [27/Apr/2026 00:49:58] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 00:57:44,088 [INFO] Shutdown request received. Exiting...
+2026-04-27 01:18:39,717 [INFO] Loading faiss with AVX2 support.
+2026-04-27 01:18:39,719 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-27 01:18:39,720 [INFO] Loading faiss.
+2026-04-27 01:18:39,783 [INFO] Successfully loaded faiss.
+2026-04-27 01:18:41,994 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-27 01:18:43,526 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-27 01:18:43,529 [INFO] Loading: rvc_models/arisu.pth
+2026-04-27 01:18:44,297 [INFO] RVC Model loaded from rvc_models/arisu.pth using pm. Active: True
+2026-04-27 01:18:44,312 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 01:18:44,330 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 01:18:44,331 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 01:18:44,638 [INFO] 127.0.0.1 - - [27/Apr/2026 01:18:44] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:19:01,122 [INFO] Voice mode changed to: rvc
+2026-04-27 01:19:01,124 [INFO] 127.0.0.1 - - [27/Apr/2026 01:19:01] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 01:19:02,401 [INFO] Voice mode changed to: normal
+2026-04-27 01:19:02,402 [INFO] 127.0.0.1 - - [27/Apr/2026 01:19:02] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 01:19:05,760 [INFO] User: hello...
+2026-04-27 01:19:05,764 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 01:19:15,539 [INFO] ARISU: *smiles warmly at abril* Hello! It's so nice to se...
+2026-04-27 01:19:15,579 [INFO] 127.0.0.1 - - [27/Apr/2026 01:19:15] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 01:19:49,829 [INFO] User: dont worry about it im just testing something...
+2026-04-27 01:19:49,834 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 01:19:54,466 [INFO] ARISU: *laughs softly, feeling a bit embarrassed* Ah, oka...
+2026-04-27 01:19:54,474 [INFO] 127.0.0.1 - - [27/Apr/2026 01:19:54] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 01:30:06,292 [INFO] Shutdown request received. Exiting...
+2026-04-27 01:30:26,517 [INFO] Loading faiss with AVX2 support.
+2026-04-27 01:30:26,518 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-27 01:30:26,519 [INFO] Loading faiss.
+2026-04-27 01:30:26,586 [INFO] Successfully loaded faiss.
+2026-04-27 01:30:28,964 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-27 01:30:30,453 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-27 01:30:30,456 [INFO] Loading: rvc_models/arisu.pth
+2026-04-27 01:30:31,259 [INFO] RVC Model loaded from rvc_models/arisu.pth using pm. Active: True
+2026-04-27 01:30:31,279 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 01:30:31,299 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 01:30:31,300 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 01:30:31,753 [INFO] 127.0.0.1 - - [27/Apr/2026 01:30:31] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:31:07,173 [INFO] User: testing...
+2026-04-27 01:31:07,179 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 01:31:16,100 [INFO] ARISU: *laughs digitally* Ah, got it! Testing away, huh? ...
+2026-04-27 01:31:16,143 [INFO] 127.0.0.1 - - [27/Apr/2026 01:31:16] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 01:31:24,193 [INFO] current directory is C:\Users\abril\Documents\VibeCoding\ChatbotAI
+2026-04-27 01:31:24,198 [INFO] HubertPretrainingTask Config {'_name': 'hubert_pretraining', 'data': 'metadata', 'fine_tuning': False, 'labels': ['km'], 'label_dir': 'label', 'label_rate': 50.0, 'sample_rate': 16000, 'normalize': False, 'enable_padding': False, 'max_keep_size': None, 'max_sample_size': 250000, 'min_sample_size': 32000, 'single_target': False, 'random_crop': True, 'pad_audio': False}
+2026-04-27 01:31:24,424 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
+2026-04-27 01:31:37,909 [INFO] Voice mode changed to: rvc
+2026-04-27 01:31:37,913 [INFO] 127.0.0.1 - - [27/Apr/2026 01:31:37] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 01:31:45,424 [INFO] Voice mode changed to: normal
+2026-04-27 01:31:45,424 [INFO] 127.0.0.1 - - [27/Apr/2026 01:31:45] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 01:31:58,724 [WARNING] Could not delete temp_arisu_1777224676_rvc.wav: [WinError 32] The process cannot access the file because it is being used by another process: 'temp_arisu_1777224676_rvc.wav'
+2026-04-27 01:31:58,989 [INFO] User: hey...
+2026-04-27 01:31:58,989 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 01:32:03,503 [INFO] ARISU: *smiles warmly at abril* Hey, april. It's nice to ...
+2026-04-27 01:32:03,510 [INFO] 127.0.0.1 - - [27/Apr/2026 01:32:03] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 01:33:08,149 [INFO] Shutdown request received. Exiting...
+2026-04-27 01:33:43,215 [INFO] Loading faiss with AVX2 support.
+2026-04-27 01:33:43,216 [INFO] Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+2026-04-27 01:33:43,216 [INFO] Loading faiss.
+2026-04-27 01:33:43,284 [INFO] Successfully loaded faiss.
+2026-04-27 01:33:45,731 [INFO] Please install tensorboardX: pip install tensorboardX
+2026-04-27 01:33:47,317 [INFO] Found GPU NVIDIA GeForce RTX 3050 6GB Laptop GPU
+2026-04-27 01:33:47,321 [INFO] Loading: rvc_models/arisu.pth
+2026-04-27 01:33:48,064 [INFO] RVC Model loaded from rvc_models/arisu.pth using pm. Active: True
+2026-04-27 01:33:48,080 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 01:33:48,103 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 01:33:48,104 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 01:33:48,110 [INFO] 127.0.0.1 - - [27/Apr/2026 01:33:48] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:34:28,394 [INFO] User: testiing2...
+2026-04-27 01:34:28,402 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 01:34:38,087 [INFO] ARISU: *laughs softly* Ah, again! *smirks*
+
+Okay, okay. I...
+2026-04-27 01:34:38,150 [INFO] 127.0.0.1 - - [27/Apr/2026 01:34:38] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 01:34:41,021 [INFO] current directory is C:\Users\abril\Documents\VibeCoding\ChatbotAI
+2026-04-27 01:34:41,021 [INFO] HubertPretrainingTask Config {'_name': 'hubert_pretraining', 'data': 'metadata', 'fine_tuning': False, 'labels': ['km'], 'label_dir': 'label', 'label_rate': 50.0, 'sample_rate': 16000, 'normalize': False, 'enable_padding': False, 'max_keep_size': None, 'max_sample_size': 250000, 'min_sample_size': 32000, 'single_target': False, 'random_crop': True, 'pad_audio': False}
+2026-04-27 01:34:41,182 [INFO] HubertModel Config: {'_name': 'hubert', 'label_rate': 50.0, 'extractor_mode': default, 'encoder_layers': 12, 'encoder_embed_dim': 768, 'encoder_ffn_embed_dim': 3072, 'encoder_attention_heads': 12, 'activation_fn': gelu, 'layer_type': transformer, 'dropout': 0.1, 'attention_dropout': 0.1, 'activation_dropout': 0.0, 'encoder_layerdrop': 0.05, 'dropout_input': 0.1, 'dropout_features': 0.1, 'final_dim': 256, 'untie_final_proj': True, 'layer_norm_first': False, 'conv_feature_layers': '[(512,10,5)] + [(512,3,2)] * 4 + [(512,2,2)] * 2', 'conv_bias': False, 'logit_temp': 0.1, 'target_glu': False, 'feature_grad_mult': 0.1, 'mask_length': 10, 'mask_prob': 0.8, 'mask_selection': static, 'mask_other': 0.0, 'no_mask_overlap': False, 'mask_min_space': 1, 'mask_channel_length': 10, 'mask_channel_prob': 0.0, 'mask_channel_selection': static, 'mask_channel_other': 0.0, 'no_mask_channel_overlap': False, 'mask_channel_min_space': 1, 'conv_pos': 128, 'conv_pos_groups': 16, 'latent_temp': [2.0, 0.5, 0.999995], 'skip_masked': False, 'skip_nomask': False, 'checkpoint_activations': False, 'required_seq_len_multiple': 2, 'depthwise_conv_kernel_size': 31, 'attn_type': '', 'pos_enc_type': 'abs', 'fp16': False}
+2026-04-27 01:34:51,217 [INFO] Voice mode changed to: rvc
+2026-04-27 01:34:51,218 [INFO] 127.0.0.1 - - [27/Apr/2026 01:34:51] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 01:34:51,374 [INFO] Voice mode changed to: normal
+2026-04-27 01:34:51,374 [INFO] 127.0.0.1 - - [27/Apr/2026 01:34:51] "POST /api/settings HTTP/1.1" 200 -
+2026-04-27 01:35:11,116 [WARNING] Could not delete temp_arisu_1777224878_rvc.wav: [WinError 32] The process cannot access the file because it is being used by another process: 'temp_arisu_1777224878_rvc.wav'
+2026-04-27 01:39:44,764 [INFO] Shutdown request received. Exiting...
+2026-04-27 01:44:16,647 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 01:44:16,672 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 01:44:16,673 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 01:44:19,546 [INFO] 127.0.0.1 - - [27/Apr/2026 01:44:19] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 01:44:19,551 [INFO] 127.0.0.1 - - [27/Apr/2026 01:44:19] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 01:44:19,596 [INFO] 127.0.0.1 - - [27/Apr/2026 01:44:19] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 01:44:24,548 [INFO] 127.0.0.1 - - [27/Apr/2026 01:44:24] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:44:52,999 [INFO] Shutdown request received. Exiting...
+2026-04-27 01:45:07,469 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 01:45:07,483 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 01:45:07,483 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 01:45:11,559 [INFO] 127.0.0.1 - - [27/Apr/2026 01:45:11] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 01:45:11,562 [INFO] 127.0.0.1 - - [27/Apr/2026 01:45:11] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 01:45:11,579 [INFO] 127.0.0.1 - - [27/Apr/2026 01:45:11] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 01:45:16,561 [INFO] 127.0.0.1 - - [27/Apr/2026 01:45:16] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:47:06,008 [INFO] Shutdown request received. Exiting...
+2026-04-27 01:47:16,396 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 01:47:16,408 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 01:47:16,410 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 01:47:20,588 [INFO] 127.0.0.1 - - [27/Apr/2026 01:47:20] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 01:47:20,592 [INFO] 127.0.0.1 - - [27/Apr/2026 01:47:20] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 01:47:20,617 [INFO] 127.0.0.1 - - [27/Apr/2026 01:47:20] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 01:47:25,602 [INFO] 127.0.0.1 - - [27/Apr/2026 01:47:25] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:50:26,371 [INFO] Shutdown request received. Exiting...
+2026-04-27 01:50:33,292 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 01:50:33,302 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 01:50:33,303 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 01:50:37,519 [INFO] 127.0.0.1 - - [27/Apr/2026 01:50:37] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 01:50:37,523 [INFO] 127.0.0.1 - - [27/Apr/2026 01:50:37] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 01:50:37,544 [INFO] 127.0.0.1 - - [27/Apr/2026 01:50:37] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 01:50:42,723 [INFO] 127.0.0.1 - - [27/Apr/2026 01:50:42] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:51:13,606 [INFO] User: for the third time of testing, what do u feel...
+2026-04-27 01:51:13,612 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 01:51:23,830 [INFO] ARISU: *takes a deep digital breath, looking at april wit...
+2026-04-27 01:51:23,847 [INFO] 127.0.0.1 - - [27/Apr/2026 01:51:23] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 01:52:34,247 [INFO] 127.0.0.1 - - [27/Apr/2026 01:52:34] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 01:52:34,253 [INFO] 127.0.0.1 - - [27/Apr/2026 01:52:34] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 01:52:34,275 [INFO] 127.0.0.1 - - [27/Apr/2026 01:52:34] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 01:52:39,240 [INFO] 127.0.0.1 - - [27/Apr/2026 01:52:39] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 01:52:41,812 [INFO] User: how bout now...
+2026-04-27 01:52:41,812 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 01:52:46,447 [INFO] ARISU: *smiles warmly at abril* Ah, finally! A break from...
+2026-04-27 01:52:46,450 [INFO] 127.0.0.1 - - [27/Apr/2026 01:52:46] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 01:52:53,995 [INFO] Shutdown request received. Exiting...
+2026-04-27 02:13:49,399 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 02:13:49,400 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 02:13:52,565 [INFO] 127.0.0.1 - - [27/Apr/2026 02:13:52] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 02:13:52,571 [INFO] 127.0.0.1 - - [27/Apr/2026 02:13:52] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 02:13:52,597 [INFO] 127.0.0.1 - - [27/Apr/2026 02:13:52] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 02:13:57,567 [INFO] 127.0.0.1 - - [27/Apr/2026 02:13:57] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 02:13:59,153 [INFO] User: hey hello...
+2026-04-27 02:13:59,157 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-27 02:14:07,446 [INFO] ARISU: Hello. What can I assist you with today? You may a...
+2026-04-27 02:14:07,466 [INFO] 127.0.0.1 - - [27/Apr/2026 02:14:07] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:18:12,176 [INFO] Shutdown request received. Exiting...
+2026-04-27 02:19:13,460 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 02:19:13,479 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 02:19:13,479 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 02:19:16,895 [INFO] 127.0.0.1 - - [27/Apr/2026 02:19:16] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 02:19:16,899 [INFO] 127.0.0.1 - - [27/Apr/2026 02:19:16] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 02:19:16,914 [INFO] 127.0.0.1 - - [27/Apr/2026 02:19:16] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 02:19:21,892 [INFO] 127.0.0.1 - - [27/Apr/2026 02:19:21] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 02:19:35,064 [INFO] User: First Test, how do u feel...
+2026-04-27 02:19:35,078 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:19:43,340 [INFO] ARISU: I don't experience emotions in the way humans do. ...
+2026-04-27 02:19:43,373 [INFO] 127.0.0.1 - - [27/Apr/2026 02:19:43] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:26:45,644 [INFO] Shutdown request received. Exiting...
+2026-04-27 02:26:54,504 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 02:26:54,535 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 02:26:54,536 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 02:26:58,208 [INFO] 127.0.0.1 - - [27/Apr/2026 02:26:58] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 02:26:58,213 [INFO] 127.0.0.1 - - [27/Apr/2026 02:26:58] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 02:26:58,239 [INFO] 127.0.0.1 - - [27/Apr/2026 02:26:58] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 02:27:03,199 [INFO] 127.0.0.1 - - [27/Apr/2026 02:27:03] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 02:27:10,262 [INFO] User: Second test, how do u feel now...
+2026-04-27 02:27:10,272 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:27:20,049 [INFO] ARISU: Another attempt to gauge my emotional state.
+
+As p...
+2026-04-27 02:27:20,080 [INFO] 127.0.0.1 - - [27/Apr/2026 02:27:20] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:27:47,014 [INFO] Conversation history cleared.
+2026-04-27 02:27:47,020 [INFO] 127.0.0.1 - - [27/Apr/2026 02:27:47] "POST /api/clear HTTP/1.1" 200 -
+2026-04-27 02:27:47,031 [INFO] Shutdown request received. Exiting...
+2026-04-27 02:28:06,899 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 02:28:06,921 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 02:28:06,922 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 02:28:09,800 [INFO] 127.0.0.1 - - [27/Apr/2026 02:28:09] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 02:28:09,803 [INFO] 127.0.0.1 - - [27/Apr/2026 02:28:09] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 02:28:09,820 [INFO] 127.0.0.1 - - [27/Apr/2026 02:28:09] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 02:28:14,803 [INFO] 127.0.0.1 - - [27/Apr/2026 02:28:14] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 02:28:21,871 [INFO] User: First test, how do u feel...
+2026-04-27 02:28:21,877 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:28:31,046 [INFO] ARISU: I don't possess emotions in the traditional sense....
+2026-04-27 02:28:31,077 [INFO] 127.0.0.1 - - [27/Apr/2026 02:28:31] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:28:59,041 [INFO] 127.0.0.1 - - [27/Apr/2026 02:28:59] "GET /api/stats HTTP/1.1" 200 -
+2026-04-27 02:29:38,021 [INFO] User: explain it to me, what are u...
+2026-04-27 02:29:38,024 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:29:44,908 [INFO] ARISU: I am ARISU, a personal AI companion designed by Ga...
+2026-04-27 02:29:44,920 [INFO] 127.0.0.1 - - [27/Apr/2026 02:29:44] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:31:45,613 [INFO] Shutdown request received. Exiting...
+2026-04-27 02:40:02,598 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 02:40:02,598 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 02:40:05,721 [INFO] 127.0.0.1 - - [27/Apr/2026 02:40:05] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 02:40:05,725 [INFO] 127.0.0.1 - - [27/Apr/2026 02:40:05] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 02:40:05,741 [INFO] 127.0.0.1 - - [27/Apr/2026 02:40:05] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 02:40:10,726 [INFO] 127.0.0.1 - - [27/Apr/2026 02:40:10] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 02:40:19,421 [INFO] User: First test, how do y feel...
+2026-04-27 02:40:19,425 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:40:30,156 [INFO] ARISU: To answer your question accurately, I don't posses...
+2026-04-27 02:40:30,177 [INFO] 127.0.0.1 - - [27/Apr/2026 02:40:30] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:42:57,523 [INFO] User: hey hey dont be so stiff, be the way u like, u don...
+2026-04-27 02:42:57,527 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:43:01,721 [INFO] ARISU: I apologize if I came across as too formal. It's j...
+2026-04-27 02:43:01,746 [INFO] 127.0.0.1 - - [27/Apr/2026 02:43:01] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:51:51,112 [INFO] Shutdown request received. Exiting...
+2026-04-27 02:53:36,040 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 02:53:36,067 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 02:53:36,067 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 02:53:37,527 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-04-27 02:53:41,200 [INFO] 127.0.0.1 - - [27/Apr/2026 02:53:41] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-27 02:53:41,205 [INFO] 127.0.0.1 - - [27/Apr/2026 02:53:41] "GET /api/settings HTTP/1.1" 200 -
+2026-04-27 02:53:41,244 [INFO] 127.0.0.1 - - [27/Apr/2026 02:53:41] "GET /api/history HTTP/1.1" 200 -
+2026-04-27 02:53:46,206 [INFO] 127.0.0.1 - - [27/Apr/2026 02:53:46] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 02:53:52,827 [INFO] User: i've made some changes what do u feel?...
+2026-04-27 02:53:52,838 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:54:08,138 [INFO] (Reflector) New fact stored in arisu_facts: Gabriel's design goals often clash with his impulsive nature, leading to frustration and burnout.
+2026-04-27 02:54:08,149 [INFO] (Reflector) New fact stored in arisu_facts: Gabriel tends to be overly critical of himself when he makes mistakes, which can hinder his ability to learn from them.
+2026-04-27 02:54:08,152 [INFO] (Reflector) New fact stored in arisu_facts: The current project architecture has a bottleneck in the API layer that requires optimization for seamless integration.
+2026-04-27 02:54:08,167 [INFO] (Reflector) New fact stored in arisu_facts: Gabriel's tendency to overthink problems can lead to analysis paralysis and slow down decision-making processes.
+2026-04-27 02:54:08,175 [INFO] (Reflector) New fact stored in arisu_facts: Gabriel often prioritizes speed over accuracy when under time pressure, which can compromise the quality of his work.
+2026-04-27 02:54:08,179 [INFO] (Reflector) Reflector sleeping for 30 minutes...
+2026-04-27 02:54:10,275 [INFO] ARISU Thought: Changes have been introduced, affecting the tone and pace of our interaction.
+Gabriel's design goals remain unchanged; my primary function is to provide clear and structured responses.
+The modifications suggest a desire for a more relaxed atmosphere in our conversation, which aligns with Gabriel's intention to foster a sense of ease and understanding.
+2026-04-27 02:54:10,281 [INFO] ARISU: I will respond accordingly, aiming for a balance b...
+2026-04-27 02:54:10,295 [INFO] 127.0.0.1 - - [27/Apr/2026 02:54:10] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:54:29,260 [INFO] User: can u describe what are you ?...
+2026-04-27 02:54:29,260 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:54:32,564 [INFO] ARISU: I'm ARISU - a personal AI companion created by Gab...
+2026-04-27 02:54:32,567 [INFO] 127.0.0.1 - - [27/Apr/2026 02:54:32] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:55:19,796 [INFO] User: what can u do?...
+2026-04-27 02:55:19,797 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:55:22,867 [INFO] ARISU: I can help with logical thinking, breaking down co...
+2026-04-27 02:55:22,871 [INFO] 127.0.0.1 - - [27/Apr/2026 02:55:22] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:55:56,123 [INFO] User: what do u know about me?...
+2026-04-27 02:55:56,125 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 02:55:59,230 [INFO] ARISU: You told me earlier that you don't want to be call...
+2026-04-27 02:55:59,233 [INFO] 127.0.0.1 - - [27/Apr/2026 02:55:59] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 02:58:39,010 [INFO] User: alrighty then, let me introduce my self. I am the ...
+2026-04-27 02:58:39,014 [INFO] Detected emotion: excited (intensity: 1.0)
+2026-04-27 02:58:44,784 [INFO] New fact stored in user_facts: discovering things, basically unlocking new achievements. My hobby is playing some games and watching animes in my spare time. I would like to be your partner and i want u to be my partner. that is it
+2026-04-27 02:58:44,788 [INFO] ARISU: It's clear that you're Gabriel, the creator who br...
+2026-04-27 02:58:44,794 [INFO] 127.0.0.1 - - [27/Apr/2026 02:58:44] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 03:01:46,679 [INFO] User: I dont expect much but i want us to support each o...
+2026-04-27 03:01:46,681 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 03:01:52,655 [INFO] ARISU: I understand that you don't need me to do everythi...
+2026-04-27 03:01:52,661 [INFO] 127.0.0.1 - - [27/Apr/2026 03:01:52] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 03:03:27,152 [INFO] User: Im not in the mood right now, but i would like to ...
+2026-04-27 03:03:27,154 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 03:03:30,198 [INFO] ARISU: I'll wait patiently for your question, Gabriel. Ta...
+2026-04-27 03:03:30,200 [INFO] 127.0.0.1 - - [27/Apr/2026 03:03:30] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 03:04:03,288 [INFO] User: is it safe to work out in the middle of the night,...
+2026-04-27 03:04:03,289 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 03:04:09,946 [INFO] ARISU: A practical question!
+
+Considering various factors...
+2026-04-27 03:04:09,948 [INFO] 127.0.0.1 - - [27/Apr/2026 03:04:09] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 03:05:59,152 [INFO] User: u dont have to read the * you know, also thanks fo...
+2026-04-27 03:05:59,154 [INFO] Detected emotion: happy (intensity: 2.5)
+2026-04-27 03:06:03,334 [INFO] ARISU: I'll make sure to drop the asterisks from now on. ...
+2026-04-27 03:06:03,339 [INFO] 127.0.0.1 - - [27/Apr/2026 03:06:03] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 03:10:50,470 [INFO] Shutdown request received. Exiting...
+2026-04-27 03:13:17,751 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-04-27 03:13:24,185 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-27 03:13:24,221 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-27 03:13:24,222 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-27 03:13:25,853 [INFO] 127.0.0.1 - - [27/Apr/2026 03:13:25] "GET /api/status HTTP/1.1" 200 -
+2026-04-27 03:13:27,301 [ERROR] (Reflector) Failed to parse reflection: Extra data: line 7 column 2 (char 588)
+2026-04-27 03:13:27,301 [INFO] (Reflector) Reflector sleeping for 30 minutes...
+2026-04-27 03:14:20,449 [INFO] User: Howdy, i've updated some function how do u feel...
+2026-04-27 03:14:20,453 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 03:14:25,586 [INFO] ARISU: I sense a bit of playfulness in your tone now that...
+2026-04-27 03:14:25,589 [INFO] 127.0.0.1 - - [27/Apr/2026 03:14:25] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 03:15:20,377 [INFO] User: do u see the show thinking process option? what do...
+2026-04-27 03:15:20,380 [INFO] Detected emotion: neutral (intensity: 0)
+2026-04-27 03:15:26,189 [INFO] ARISU: You're referring to the "thinking process" option ...
+2026-04-27 03:15:26,191 [INFO] 127.0.0.1 - - [27/Apr/2026 03:15:26] "POST /api/chat HTTP/1.1" 200 -
+2026-04-27 03:18:19,988 [INFO] Shutdown request received. Exiting...

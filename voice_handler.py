@@ -33,7 +33,8 @@ class VoiceHandler:
         self.rvc_inference = None
         self.rvc_active = RVC_ENABLED
         
-        if os.path.exists(RVC_MODEL_PATH):
+        # Only load the model if RVC is enabled in config
+        if RVC_ENABLED and os.path.exists(RVC_MODEL_PATH):
             try:
                 from rvc_python.infer import RVCInference
                 self.rvc_inference = RVCInference(device=RVC_DEVICE)

@@ -111,10 +111,13 @@ def chat():
         
         emotion_hint = facts_summary # Inject facts first
         if emotion != 'neutral' and intensity >= 1.0:
-            emotion_hint += f"\n[System Note: User seems {emotion}. Intensity: {intensity:.1f}. Respond with your tsundere personality, but acknowledge this emotional state.]"
+            emotion_hint += f"\n[System Note: Gabriel appears {emotion}. Intensity: {intensity:.1f}. Respond with your systematic reasoning, maintaining your composed and analytical tone while addressing this state.]"
         
         context = arisu.get_full_context(emotion_hint=emotion_hint)
-        response = brain.chat(context)
+        thought, response = brain.chat_with_thought(context)
+        
+        if thought:
+            logger.info(f"ARISU Thought: {thought}")
         
         # 4. Extract new facts to remember for next time
         extract_facts(user_message, response)
@@ -139,6 +142,7 @@ def chat():
         
         return jsonify({
             'response': response,
+            'thought': thought,
             'emotion': emotion if emotion != 'neutral' else None,
             'intensity': round(intensity, 2),
             'timestamp': datetime.now().strftime("%H:%M"),
@@ -164,14 +168,20 @@ def get_stats():
 
 @app.route('/api/clear', methods=['POST'])
 def clear_history():
-    """Clear conversation history"""
+    """Clear conversation history and long-term memory"""
     try:
+        # 1. Clear conversation history
         arisu.clear_history()
         detector.conversation_start = datetime.now()
         detector.message_count = 0
         detector.emotion_history = []
         save_history()
-        logger.info("Conversation history cleared.")
+        
+        # 2. Clear long-term facts
+        memory.facts = {"user_facts": [], "arisu_facts": [], "shared_history": []}
+        memory.save_facts()
+        
+        logger.info("Conversation history and long-term facts cleared.")
         return jsonify({'success': True})
     except Exception as e:
         logger.error(f"Error in /api/clear: {e}")

@@ -46,7 +46,7 @@ class MemoryManager:
 
         summary = "\n[LONG-TERM MEMORY & KNOWN FACTS]\n"
         if self.facts["user_facts"]:
-            summary += "What I know about abril: " + "; ".join(self.facts["user_facts"]) + "\n"
+            summary += "What I know about Gabriel: " + "; ".join(self.facts["user_facts"]) + "\n"
         if self.facts["arisu_facts"]:
             summary += "My own notes: " + "; ".join(self.facts["arisu_facts"]) + "\n"
         

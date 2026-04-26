@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="UTF-8">
+<title>ARISU Interface</title>
+<HTA:APPLICATION
+  ID="ArisuCore"
+  APPLICATIONNAME="Arisu Core"
+  BORDER="thin"
+  BORDERSTYLE="normal"
+  CAPTION="yes"
+  ICON=""
+  MAXIMIZEBUTTON="yes"
+  MINIMIZEBUTTON="yes"
+  SHOWINTASKBAR="yes"
+  SINGLEINSTANCE="yes"
+  SYSMENU="yes"
+  WINDOWSTATE="normal"
+  SCROLL="no"
+/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400&family=Inter:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #fafbfc;
+  height: 100vh;
+  overflow: hidden;
+  color: #4a5568;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e0;
+  position: relative;
+  animation: pulse 2s infinite;
+  margin-right: 12px;
+}
+
+.status-dot.active {
+  background: #68d391;
+}
+
+.status-dot.thinking {
+  background: #a0aec0;
+  animation: thinking 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes thinking {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+.logo-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  color: #718096;
+  text-transform: uppercase;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.control-btn {
+  margin-left: 10px;
+}
+
+.settings-icon {
+  margin-left: 10px;
+}
+
+.control-btn {
+  padding: 8px 18px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 400;
+  color: #718096;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.control-btn:hover:not(:disabled) {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control-btn.active {
+  background: #f7fafc;
+  color: #4a5568;
+  border-color: #cbd5e0;
+}
+
+.settings-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settings-icon:hover {
+  background: #f7fafc;
+  transform: rotate(90deg);
+}
+
+.settings-icon svg {
+  width: 18px;
+  height: 18px;
+  color: #a0aec0;
+}
+
+/* Chat Area */
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 25px;
+  display: block;
+}
+
+.chat-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+.loading-message {
+  text-align: center;
+  color: #cbd5e0;
+  font-size: 42px;
+  margin-top: 150px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  animation: loadingFade 5s infinite ease-in-out;
+  font-family: 'Orbitron', sans-serif;
+}
+
+@keyframes loadingFade {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.message {
+  display: block;
+  width: 100%;
+  margin-bottom: 25px;
+  animation: slideIn 0.3s ease;
+  clear: both;
+}
+
+.message.user {
+  text-align: right;
+}
+
+.message.ai {
+  text-align: left;
+}
+
+.message-content {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 75%;
+  text-align: left;
+}
+
+.message.user .message-content {
+  margin-right: 12px;
+}
+
+.message.ai .message-content {
+  margin-left: 12px;
+}
+
+.message-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #718096;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 36px;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 18px;
+}
+
+.message.user .message-avatar {
+  background: #a0aec0;
+}
+
+.message-bubble {
+  padding: 12px 18px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4a5568;
+  font-weight: 300;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: inline-block;
+  text-align: left;
+}
+
+.message.user .message-bubble {
+  background: #4a5568;
+  color: #ffffff;
+  border-color: #4a5568;
+  border-top-right-radius: 4px;
+}
+
+.message.ai .message-bubble {
+  border-top-left-radius: 4px;
+}
+
+.message-meta {
+  font-size: 10px;
+  color: #a0aec0;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* Input Area */
+.input-area {
+  padding: 20px 30px 30px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  background: #fafbfc;
+  border: 1px solid #e2e8f0;
+  border-radius: 25px;
+  padding: 8px 8px 8px 20px;
+  transition: all 0.3s ease;
+}
+
+#messageInput {
+  margin-right: 12px;
+}
+
+.input-container:focus-within {
+  border-color: #cbd5e0;
+  background: #ffffff;
+}
+
+#messageInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 0;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  color: #4a5568;
+  background: transparent;
+  font-weight: 300;
+  resize: none;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+#messageInput::placeholder {
+  color: #cbd5e0;
+}
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #4a5568;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: #2d3748;
+  transform: scale(1.05);
+}
+
+.send-btn:active {
+  transform: scale(0.95);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.send-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlide 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.close-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f7fafc;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: #a0aec0;
+}
+
+.close-btn:hover {
+  background: #edf2f7;
+}
+
+.stat-item {
+  padding: 15px;
+  background: #f7fafc;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #718096;
+  font-weight: 400;
+}
+
+.stat-value {
+  font-size: 13px;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+/* Thought Block Styling */
+.thought-block {
+  font-size: 11px;
+  color: #a0aec0;
+  background: #f7fafc;
+  padding: 10px;
+  border-left: 2px solid #cbd5e0;
+  margin-bottom: 10px;
+  font-style: italic;
+  display: none;
+  border-radius: 4px;
+}
+.show-thoughts .thought-block {
+  display: block;
+}
+
+.danger-zone {
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.system-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #718096;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.system-btn:hover {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+}
+
+.toggle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.danger-btn {
+  width: 100%;
+  padding: 12px;
+  background: #fc8181;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.danger-btn:hover {
+  background: #f56565;
+  transform: translateY(-2px);
+}
+
+.typing-indicator {
+  display: none;
+  font-size: 11px;
+  color: #a0aec0;
+  padding: 10px 30px;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-section">
+      <div class="status-dot" id="statusDot"></div>
+      <div class="logo-text">ARISU CORE</div>
+    </div>
+    
+    <div class="controls">
+      <button class="control-btn" id="voiceBtn" onclick="toggleVoice()" data-mode="normal">VOICE: NORMAL</button>
+      <button class="control-btn" onclick="showAnalytics()">ANALYTICS</button>
+      <div class="settings-icon" onclick="showSettings()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="chat-area" id="chatArea">
+    <div class="loading-message" id="loadingMsg">【=◆︿◆=】</div>
+  </div>
+
+  <!-- Typing Indicator -->
+  <div class="typing-indicator" id="typingIndicator">ARISU is thinking...</div>
+
+  <!-- Input Area -->
+  <div class="input-area">
+    <div class="input-container">
+      <textarea id="messageInput" placeholder="Message ARISU..." rows="1"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Analytics Modal -->
+<div class="modal" id="analyticsModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">Analytics</div>
+      <button class="close-btn" onclick="closeModal('analyticsModal')">✕</button>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Total Messages</div>
+      <div class="stat-value" id="totalMessages">0</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">AI Responses</div>
+      <div class="stat-value" id="aiResponses">0</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Current Voice Model</div>
+      <div class="stat-value" id="currentVoice">NORMAL</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Session Duration</div>
+      <div class="stat-value" id="sessionTime">0m 0s</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">API Status</div>
+      <div class="stat-value" id="apiStatus">Checking...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal" id="settingsModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">Settings</div>
+      <button class="close-btn" onclick="closeModal('settingsModal')">✕</button>
+    </div>
+    
+    <div class="toggle-item">
+      <div class="stat-label">Show Thinking Process</div>
+      <input type="checkbox" id="thoughtToggle" onclick="toggleThoughtDisplay()">
+    </div>
+
+    <button class="system-btn" onclick="launchMonitor()">Open System Monitor</button>
+    <button class="system-btn" onclick="shutdownSystem()">Shut Down ARISU</button>
+
+    <div class="danger-zone">
+      <div class="stat-label" style="margin-bottom: 12px;">Danger Zone</div>
+      <button class="danger-btn" onclick="wipeMemory()">WIPE MEMORY</button>
+    </div>
+  </div>
+</div>
+
+<script language="javascript">
+// API Configuration
+var API_URL = 'http://127.0.0.1:5001/api';
+var isBusy = false;
+var sessionStart = Date.now();
+var messageCount = 0;
+var aiResponseCount = 0;
+var showThoughts = false;
+
+// Shell for launching scripts
+var shell = new ActiveXObject("WScript.Shell");
+var fso = new ActiveXObject("Scripting.FileSystemObject");
+var currentDir = fso.GetParentFolderName(window.location.pathname.replace(/^\/+/g, ""));
+
+function launchMonitor() {
+  try {
+    shell.Run('"' + currentDir + '\\ARISU_Monitor.bat"', 1, false);
+  } catch(e) { alert("Failed to launch monitor: " + e.message); }
+}
+
+function shutdownSystem() {
+  if(confirm("Completely shut down all ARISU background services?")) {
+    try {
+      shell.Run('"' + currentDir + '\\ARISU_Stop.bat"', 0, false);
+      window.close();
+    } catch(e) { alert("Failed to stop system: " + e.message); }
+  }
+}
+
+function toggleThoughtDisplay() {
+  showThoughts = document.getElementById('thoughtToggle').checked;
+  if(showThoughts) {
+    document.body.className += " show-thoughts";
+  } else {
+    document.body.className = document.body.className.replace(/\bshow-thoughts\b/g, "").replace(/\s+/g, " ").replace(/^\s+|\s+$/g, "");
+  }
+}
+
+// Initialize on load
+window.onload = function() {
+  window.resizeTo(1000, 800);
+  autoSizeInput();
+  pingAPI();
+  loadSettings();
+  setInterval(checkStatus, 5000);
+};
+
+// Cleanup on close
+window.onbeforeunload = function() {
+  try {
+    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open("POST", API_URL + "/shutdown", false);
+    xhr.send();
+  } catch(e) {}
+};
+
+// Auto-resize textarea
+function autoSizeInput() {
+  var el = document.getElementById('messageInput');
+  el.oninput = function() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 'px';
+  };
+  el.onkeydown = function(e) {
+    if(e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+}
+
+// Status management
+function setStatus(state) {
+  var dot = document.getElementById('statusDot');
+  dot.className = 'status-dot';
+  if (state === 'active') {
+    dot.className += ' active';
+  } else if (state === 'thinking') {
+    dot.className += ' thinking';
+  }
+}
+
+function checkStatus() {
+  if (isBusy) return;
+  try {
+    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open("GET", API_URL + "/status", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          setStatus('active');
+        } else {
+          setStatus('offline');
+        }
+      }
+    };
+    xhr.send();
+  } catch(e) {
+    setStatus('offline');
+  }
+}
+
+// Voice toggle
+function toggleVoice() {
+  var btn = document.getElementById('voiceBtn');
+  var currentMode = btn.getAttribute('data-mode');
+  var nextMode = currentMode === 'rvc' ? 'normal' : 'rvc';
+  
+  try {
+    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open("POST", API_URL + "/settings", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var res = eval('(' + xhr.responseText + ')');
+        updateVoiceButton(res.voice_mode);
+      }
+    };
+    xhr.send('{"voice_mode":"' + nextMode + '"}');
+  } catch(e) {
+    alert("Failed to toggle voice mode");
+  }
+}
+
+function updateVoiceButton(mode) {
+  var btn = document.getElementById('voiceBtn');
+  btn.setAttribute('data-mode', mode);
+  btn.textContent = 'VOICE: ' + mode.toUpperCase();
+  if (mode === 'rvc') {
+    if (btn.className.indexOf('active') === -1) btn.className += ' active';
+  } else {
+    btn.className = btn.className.replace(/\bactive\b/g, '').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+  }
+}
+
+// Load settings
+function loadSettings() {
+  try {
+    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open("GET", API_URL + "/settings", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var res = eval('(' + xhr.responseText + ')');
+        updateVoiceButton(res.voice_mode);
+        if (!res.rvc_available) {
+          var btn = document.getElementById('voiceBtn');
+          btn.disabled = true;
+          btn.title = "RVC Model not found at rvc_models/arisu.pth";
+        }
+      }
+    };
+    xhr.send();
+  } catch(e) {}
+}
+
+// Ping API
+function pingAPI() {
+  try {
+    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open("GET", API_URL + "/greeting", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var loading = document.getElementById('loadingMsg');
+        if (loading) loading.style.display = 'none';
+        setStatus('active');
+        loadHistory();
+      }
+    };
+    xhr.send();
+  } catch(e) {
+    setStatus('offline');
+  }
+}
+
+// Load chat history
+function loadHistory() {
+  try {
+    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open("GET", API_URL + "/history", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var data = eval('(' + xhr.responseText + ')');
+        if(data.messages) {
+          for(var i=0; i<data.messages.length; i++) {
+            var m = data.messages[i];
+            addMessage(m.role === 'user' ? 'user' : 'ai', m.content, false);
+            if (m.role === 'user') messageCount++;
+            else aiResponseCount++;
+          }
+          scrollToBottom();
+        }
+      }
+    };
+    xhr.send();
+  } catch(e) {}
+}
+
+// Send message
+function sendMessage() {
+  if(isBusy) return;
+  
+  var input = document.getElementById('messageInput');
+  var message = input.value.replace(/^\s+|\s+$/g, '');
+  
+  if (!message) return;
+  
+  isBusy = true;
+  input.disabled = true;
+  document.getElementById('sendBtn').disabled = true;
+  document.getElementById('typingIndicator').style.display = 'block';
+  setStatus('thinking');
+  
+  addMessage('user', message, '', true);
+  messageCount++;
+  
+  input.value = '';
+  input.style.height = 'auto';
+  scrollToBottom();
+  
+  var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+  xhr.open("POST", API_URL + "/chat", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      document.getElementById('typingIndicator').style.display = 'none';
+      if (xhr.status === 200) {
+        var res = eval('(' + xhr.responseText + ')');
+        addMessage('ai', res.response, res.thought, true);
+        aiResponseCount++;
+        setStatus('active');
+      } else {
+        setStatus('offline');
+        addMessage('ai', 'Maaf, terjadi kesalahan koneksi ke server.', '', true);
+      }
+      isBusy = false;
+      input.disabled = false;
+      document.getElementById('sendBtn').disabled = false;
+      input.focus();
+      scrollToBottom();
+    }
+  };
+  xhr.send('{"message":"' + jsonSafe(message) + '"}');
+}
+
+// Add message to chat
+function addMessage(role, content, thought, animate) {
+  var chatArea = document.getElementById('chatArea');
+  
+  // Remove loading message
+  var loadingMsg = document.getElementById('loadingMsg');
+  if (loadingMsg && loadingMsg.parentNode) {
+    loadingMsg.parentNode.removeChild(loadingMsg);
+  }
+  
+  var messageDiv = document.createElement('div');
+  messageDiv.className = 'message ' + role;
+  if (!animate) messageDiv.style.animation = 'none';
+  
+  var time = new Date();
+  var timeStr = time.getHours() + ':' + (time.getMinutes()<10?'0':'') + time.getMinutes();
+  
+  var meta = document.createElement('div');
+  meta.className = 'message-meta';
+  meta.textContent = (role === 'user' ? 'YOU' : 'ARISU') + ' • ' + timeStr;
+  
+  var avatar = document.createElement('div');
+  avatar.className = 'message-avatar';
+  avatar.textContent = role === 'user' ? 'U' : 'A';
+  
+  var contentWrap = document.createElement('div');
+  contentWrap.className = 'message-content';
+  contentWrap.appendChild(meta);
+
+  // Add thought block if available
+  if (role === 'ai' && thought) {
+    var thoughtDiv = document.createElement('div');
+    thoughtDiv.className = 'thought-block';
+    thoughtDiv.innerHTML = 'Thinking: ' + parseMarkdown(thought);
+    contentWrap.appendChild(thoughtDiv);
+  }
+  
+  var bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.innerHTML = parseMarkdown(content);
+  contentWrap.appendChild(bubble);
+  
+  if (role === 'user') {
+    messageDiv.appendChild(contentWrap);
+    messageDiv.appendChild(avatar);
+  } else {
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(contentWrap);
+  }
+  
+  chatArea.appendChild(messageDiv);
+}
+
+// Parse markdown
+function parseMarkdown(text) {
+  text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  // Bold/Italic stars
+  text = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+  text = text.replace(/\*(.*?)\*/g, '<i>$1</i>');
+  text = text.replace(/\n/g, '<br>');
+  return text;
+}
+
+// JSON escape
+function jsonSafe(s) {
+  return s.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '');
+}
+
+// Scroll to bottom
+function scrollToBottom() {
+  var chatArea = document.getElementById('chatArea');
+  chatArea.scrollTop = chatArea.scrollHeight;
+  setTimeout(function() {
+    chatArea.scrollTop = chatArea.scrollHeight;
+  }, 50);
+}
+
+// Analytics modal
+function showAnalytics() {
+  var duration = Math.floor((Date.now() - sessionStart) / 1000);
+  var minutes = Math.floor(duration / 60);
+  var seconds = duration % 60;
+  
+  document.getElementById('totalMessages').textContent = messageCount;
+  document.getElementById('aiResponses').textContent = aiResponseCount;
+  document.getElementById('currentVoice').textContent = document.getElementById('voiceBtn').getAttribute('data-mode').toUpperCase();
+  document.getElementById('sessionTime').textContent = minutes + 'm ' + seconds + 's';
+  
+  // Get API stats
+  try {
+    var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open("GET", API_URL + "/stats", true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          document.getElementById('apiStatus').textContent = 'Connected';
+        } else {
+          document.getElementById('apiStatus').textContent = 'Offline';
+        }
+      }
+    };
+    xhr.send();
+  } catch(e) {
+    document.getElementById('apiStatus').textContent = 'Offline';
+  }
+  
+  var modal = document.getElementById('analyticsModal');
+  if (modal.className.indexOf('show') === -1) {
+    modal.className += ' show';
+  }
+}
+
+// Settings modal
+function showSettings() {
+  var modal = document.getElementById('settingsModal');
+  if (modal.className.indexOf('show') === -1) {
+    modal.className += ' show';
+  }
+}
+
+// Close modal
+function closeModal(modalId) {
+  var modal = document.getElementById(modalId);
+  modal.className = modal.className.replace(/\bshow\b/g, '').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+}
+
+// Wipe memory
+function wipeMemory() {
+  if(confirm('Purge short-term memory? This will clear all conversation history.')) {
+    try {
+      var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      xhr.open("POST", API_URL + "/clear", true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          closeModal('settingsModal');
+          window.location.reload();
+        }
+      };
+      xhr.send();
+    } catch(e) {
+      alert('Failed to clear memory');
+    }
+  }
+}
+
+// Close modal on outside click
+window.onclick = function(e) {
+  var event = e || window.event;
+  var target = event.target || event.srcElement;
+  if (target && target.className && typeof target.className === 'string') {
+    if (target.className.indexOf('modal') !== -1 && target.className.indexOf('show') !== -1) {
+      target.className = target.className.replace(/\bshow\b/g, '').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+    }
+  }
+}
+</script>
+
+</body>
+</html>
