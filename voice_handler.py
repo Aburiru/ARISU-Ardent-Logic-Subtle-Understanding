@@ -29,34 +29,39 @@ class VoiceHandler:
         self.recognizer = sr.Recognizer()
         self.sample_rate = 44100
         
-        # Initialize RVC if enabled
+        # Initialize RVC if enabled or if model exists for later use
         self.rvc_inference = None
-        if RVC_ENABLED:
+        self.rvc_active = RVC_ENABLED
+        
+        if os.path.exists(RVC_MODEL_PATH):
             try:
                 from rvc_python.infer import RVCInference
-                if os.path.exists(RVC_MODEL_PATH):
-                    self.rvc_inference = RVCInference(device=RVC_DEVICE)
-                    # Load model with index if it exists
-                    idx_p = RVC_INDEX_PATH if os.path.exists(RVC_INDEX_PATH) else ""
-                    self.rvc_inference.load_model(RVC_MODEL_PATH, index_path=idx_p)
+                self.rvc_inference = RVCInference(device=RVC_DEVICE)
+                # Load model with index if it exists
+                idx_p = RVC_INDEX_PATH if os.path.exists(RVC_INDEX_PATH) else ""
+                self.rvc_inference.load_model(RVC_MODEL_PATH, index_path=idx_p)
 
-                    # Set default inference parameters
-                    # Get method from config or fallback to pm
-                    try:
-                        method = RVC_METHOD
-                    except NameError:
-                        method = "pm"
+                # Set default inference parameters
+                try:
+                    from config import RVC_METHOD
+                    method = RVC_METHOD
+                except ImportError:
+                    method = "pm"
 
-                    self.rvc_inference.f0method = method
-                    self.rvc_inference.f0up_key = RVC_PITCH
+                self.rvc_inference.f0method = method
+                self.rvc_inference.f0up_key = RVC_PITCH
 
-                    logger.info(f"RVC Model loaded from {RVC_MODEL_PATH} using {method}")
-                else:
-                    logger.warning(f"RVC Model not found at {RVC_MODEL_PATH}. RVC will be disabled.")
+                logger.info(f"RVC Model loaded from {RVC_MODEL_PATH} using {method}. Active: {self.rvc_active}")
             except ImportError:
                 logger.error("rvc-python not installed. Run 'pip install rvc-python' to use RVC.")
+                self.rvc_active = False
             except Exception as e:
                 logger.error(f"Failed to initialize RVC: {e}")
+                self.rvc_active = False
+        else:
+            if self.rvc_active:
+                logger.warning(f"RVC Model not found at {RVC_MODEL_PATH}. RVC will be disabled.")
+                self.rvc_active = False
 
     def clean_text(self, text):
         """Remove asterisks and text between them (actions/narration)"""
@@ -136,7 +141,7 @@ class VoiceHandler:
 
     def rvc_convert(self, input_path):
         """Convert voice using RVC model"""
-        if not self.rvc_inference:
+        if not self.rvc_inference or not self.rvc_active:
             return input_path
             
         logger.info("🎭 Converting voice with RVC...")

@@ -208,6 +208,33 @@ def get_status():
         'uptime': detector.get_conversation_duration()[1]
     })
 
+@app.route('/api/settings', methods=['GET', 'POST'])
+def handle_settings():
+    """Get or update ARISU settings"""
+    try:
+        if request.method == 'POST':
+            data = request.get_json(silent=True) or {}
+            if 'voice_mode' in data:
+                mode = data['voice_mode']
+                if mode == 'rvc':
+                    if voice.rvc_inference:
+                        voice.rvc_active = True
+                    else:
+                        return jsonify({'error': 'RVC model not loaded'}), 400
+                elif mode == 'normal':
+                    voice.rvc_active = False
+                logger.info(f"Voice mode changed to: {mode}")
+            return jsonify({'success': True, 'voice_mode': 'rvc' if voice.rvc_active else 'normal'})
+        
+        # GET request
+        return jsonify({
+            'voice_mode': 'rvc' if voice.rvc_active else 'normal',
+            'rvc_available': voice.rvc_inference is not None
+        })
+    except Exception as e:
+        logger.error(f"Error in /api/settings: {e}")
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/shutdown', methods=['POST'])
 def shutdown():
     """Shutdown the API server and exit"""

@@ -200,6 +200,7 @@
             <div class="title">ARISU <span>CORE</span></div>
         </div>
         <div class="nav-actions">
+            <button class="icon-btn" id="voiceToggleBtn" onclick="toggleVoiceMode()" data-mode="normal">Voice: Normal</button>
             <button class="icon-btn" onclick="showStats()">Analytics</button>
             <button class="icon-btn" onclick="clearChat()">Wipe Memory</button>
         </div>
@@ -228,6 +229,7 @@
             window.resizeTo(1000, 800);
             autoSizeInput();
             pingAPI();
+            loadSettings();
             setInterval(checkStatus, 5000);
         };
 
@@ -238,6 +240,53 @@
                 xhr.send();
             } catch(e) {}
         };
+
+        function toggleVoiceMode() {
+            var btn = document.getElementById('voiceToggleBtn');
+            var currentMode = btn.getAttribute('data-mode');
+            var nextMode = currentMode === 'rvc' ? 'normal' : 'rvc';
+            
+            try {
+                var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                xhr.open("POST", API_URL + "/settings", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var res = eval('(' + xhr.responseText + ')');
+                        updateVoiceButton(res.voice_mode);
+                    }
+                };
+                xhr.send('{"voice_mode":"' + nextMode + '"}');
+            } catch(e) { alert("Failed to toggle voice mode"); }
+        }
+
+        function updateVoiceButton(mode) {
+            var btn = document.getElementById('voiceToggleBtn');
+            btn.setAttribute('data-mode', mode);
+            btn.innerHTML = mode === 'rvc' ? 'Voice: RVC' : 'Voice: Normal';
+            btn.style.borderColor = mode === 'rvc' ? 'var(--accent)' : 'rgba(255,255,255,0.1)';
+            btn.style.color = mode === 'rvc' ? 'var(--accent)' : 'var(--text-s)';
+        }
+
+        function loadSettings() {
+            try {
+                var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                xhr.open("GET", API_URL + "/settings", true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var res = eval('(' + xhr.responseText + ')');
+                        updateVoiceButton(res.voice_mode);
+                        if (!res.rvc_available) {
+                             var btn = document.getElementById('voiceToggleBtn');
+                             btn.disabled = true;
+                             btn.title = "RVC Model not found at rvc_models/arisu.pth";
+                             btn.style.opacity = "0.5";
+                        }
+                    }
+                };
+                xhr.send();
+            } catch(e) {}
+        }
 
         function scrollToBottom() {
             var view = document.getElementById('chatViewport');
