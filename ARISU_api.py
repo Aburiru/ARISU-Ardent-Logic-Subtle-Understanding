@@ -33,12 +33,40 @@ logger = logging.getLogger("ARISU_API")
 app = Flask(__name__)
 CORS(app)  # Allow HTA to access API
 
+import threading
+import queue
+
 # Initialize ARISU components
 arisu = Chatbot("ARISU", ARISU_SYSTEM_PROMPT)
 brain = AIBrain()
 detector = EmotionDetector()
 voice = VoiceHandler()
 memory = MemoryManager()
+
+# Speech Queue and Worker
+speech_queue = queue.Queue()
+
+def speech_worker():
+    """Worker thread to process speech requests sequentially to save RAM/CPU"""
+    logger.info("🔊 Speech worker thread started.")
+    while True:
+        try:
+            # Get request from queue (blocks until item available)
+            response_text, emotion = speech_queue.get()
+            if response_text is None: # Shutdown signal
+                break
+            
+            try:
+                voice.speak(response_text, emotion)
+            except Exception as ve:
+                logger.error(f"Voice worker error: {ve}")
+            finally:
+                speech_queue.task_done()
+        except Exception as e:
+            logger.error(f"Speech worker loop error: {e}")
+
+# Start the speech worker thread
+threading.Thread(target=speech_worker, daemon=True).start()
 
 def extract_facts(user_message, ai_response):
     """Simple rule-based fact extraction"""
@@ -125,15 +153,8 @@ def chat():
         # 4. Add response to history
         arisu.add_message("assistant", response)
 
-        # 5. Speak response in background thread (so text appears first)
-        import threading
-        def handle_speech():
-            try:
-                voice.speak(response, emotion)
-            except Exception as ve:
-                logger.error(f"Voice error: {ve}")
-
-        threading.Thread(target=handle_speech, daemon=True).start()
+        # 5. Queue speech response (handled by background worker)
+        speech_queue.put((response, emotion))
 
         # 6. Save and return
         save_history()
@@ -247,9 +268,22 @@ def handle_settings():
 
 @app.route('/api/shutdown', methods=['POST'])
 def shutdown():
-    """Shutdown the API server and exit"""
-    logger.info("Shutdown request received. Exiting...")
-    os._exit(0) # Forcefully exit the process and all threads
+    """Shutdown the API server and all background services"""
+    logger.info("Shutdown request received. Cleaning up...")
+    
+    try:
+        # Kill the Reflector process specifically
+        # We use taskkill with a filter on the command line if possible, 
+        # but on Windows pythonw doesn't show the script name in the image name.
+        # So we use a more direct approach: kill all pythonw.exe 
+        # (This is what ARISU_Stop.bat does anyway)
+        import subprocess
+        subprocess.run(["taskkill", "/F", "/IM", "pythonw.exe", "/T"], capture_output=True)
+    except Exception as e:
+        logger.error(f"Error during subprocess cleanup: {e}")
+    
+    # Finally exit the API itself
+    os._exit(0) 
     return jsonify({'success': True})
 
 if __name__ == '__main__':

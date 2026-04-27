@@ -27,6 +27,7 @@ class AIBrain:
     def chat_with_thought(self, messages):
         """
         Send conversation to Ollama and get response with internal monologue
+        Supports streaming for better perceived performance.
         
         messages = list of message dictionaries
         Returns: (thought_process, final_response)
@@ -36,36 +37,45 @@ class AIBrain:
         payload = {
             "model": self.model,
             "messages": messages,
-            "stream": False,
+            "stream": True,  # Enable streaming
             "options": {
                 "temperature": 0.7,
                 "top_p": 0.9
             }
         }
         
+        full_content = ""
         try:
             response = requests.post(
                 self.api_url,
                 json=payload,
-                timeout=OLLAMA_TIMEOUT
+                timeout=OLLAMA_TIMEOUT,
+                stream=True
             )
             
             if response.status_code == 200:
-                result = response.json()
+                print("🧠 ARISU is thinking...", end="", flush=True)
+                for line in response.iter_lines():
+                    if line:
+                        chunk = json.loads(line.decode('utf-8'))
+                        if 'message' in chunk and 'content' in chunk['message']:
+                            content_chunk = chunk['message']['content']
+                            full_content += content_chunk
+                            # Optional: print dots for progress
+                            if len(full_content) % 50 == 0:
+                                print(".", end="", flush=True)
+                print(" Done.")
                 
-                if "message" in result and "content" in result["message"]:
-                    full_content = result["message"]["content"].strip()
-                    
-                    # Extract thought block
-                    thought_match = re.search(r'<thought>(.*?)</thought>', full_content, re.DOTALL)
-                    thought = thought_match.group(1).strip() if thought_match else ""
-                    
-                    # Remove thought block from final response
-                    final_response = re.sub(r'<thought>.*?</thought>', '', full_content, flags=re.DOTALL).strip()
-                    
-                    return thought, final_response
-                else:
-                    return "", f"Unexpected format from Ollama: {result}"
+                full_content = full_content.strip()
+                
+                # Extract thought block
+                thought_match = re.search(r'<thought>(.*?)</thought>', full_content, re.DOTALL)
+                thought = thought_match.group(1).strip() if thought_match else ""
+                
+                # Remove thought block from final response
+                final_response = re.sub(r'<thought>.*?</thought>', '', full_content, flags=re.DOTALL).strip()
+                
+                return thought, final_response
             
             else:
                 return "", f"Ollama Error {response.status_code}: {response.text}"

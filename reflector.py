@@ -80,13 +80,23 @@ Only output the JSON list. If no new insights, output [].
 
 if __name__ == "__main__":
     reflector = ArisuReflector()
+    last_reflected_count = 0
+    
     while True:
         try:
-            reflector.reflect()
+            history = reflector.load_history()
+            current_count = len(history)
+            
+            # Only reflect if we have at least 5 new messages or it's the first run
+            if current_count >= last_reflected_count + 5:
+                reflector.reflect()
+                last_reflected_count = current_count
+                logger.info(f"Reflection complete. Next pass after {current_count + 5} messages.")
+            else:
+                logger.info(f"Skipping reflection: only {current_count - last_reflected_count} new messages (need 5).")
+                
         except Exception as e:
             logger.error(f"Reflector Loop Error: {e}")
         
-        # Reflect every 30 minutes (1800 seconds)
-        # In a real production environment, this could be longer or triggered by message counts
-        logger.info("Reflector sleeping for 30 minutes...")
-        time.sleep(1800)
+        # Check every 15 minutes instead of 30, but the message count guard prevents waste
+        time.sleep(900)

@@ -32,6 +32,10 @@ class MemoryManager:
         if category not in self.facts:
             self.facts[category] = []
         
+        # Ensure fact is a string
+        if not isinstance(fact, str):
+            fact = str(fact)
+            
         if fact not in self.facts[category]:
             self.facts[category].append(fact)
             self.save_facts()
@@ -45,9 +49,14 @@ class MemoryManager:
             return ""
 
         summary = "\n[LONG-TERM MEMORY & KNOWN FACTS]\n"
-        if self.facts["user_facts"]:
-            summary += "What I know about Gabriel: " + "; ".join(self.facts["user_facts"]) + "\n"
-        if self.facts["arisu_facts"]:
-            summary += "My own notes: " + "; ".join(self.facts["arisu_facts"]) + "\n"
+        
+        # Helper to join only strings
+        def safe_join(fact_list):
+            return "; ".join([str(f) for f in fact_list if f])
+
+        if self.facts.get("user_facts"):
+            summary += "What I know about Gabriel: " + safe_join(self.facts["user_facts"]) + "\n"
+        if self.facts.get("arisu_facts"):
+            summary += "My own notes: " + safe_join(self.facts["arisu_facts"]) + "\n"
         
         return summary

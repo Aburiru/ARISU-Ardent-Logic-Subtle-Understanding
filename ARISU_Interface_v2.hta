@@ -1013,18 +1013,20 @@ function closeModal(modalId) {
 // Wipe memory
 function wipeMemory() {
   if(confirm('Purge short-term memory? This will clear all conversation history.')) {
-    try {
-      var xhr = new ActiveXObject("Microsoft.XMLHTTP");
-      xhr.open("POST", API_URL + "/clear", true);
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-          closeModal('settingsModal');
-          window.location.reload();
-        }
-      };
-      xhr.send();
-    } catch(e) {
-      alert('Failed to clear memory');
+    if(confirm('Are you absolutely sure? This cannot be undone and ARISU will forget everything from this session.')) {
+      try {
+        var xhr = new ActiveXObject("Microsoft.XMLHTTP");
+        xhr.open("POST", API_URL + "/clear", true);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            closeModal('settingsModal');
+            window.location.reload();
+          }
+        };
+        xhr.send();
+      } catch(e) {
+        alert('Failed to clear memory');
+      }
     }
   }
 }

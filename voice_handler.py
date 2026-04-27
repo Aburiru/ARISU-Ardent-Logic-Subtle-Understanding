@@ -33,36 +33,48 @@ class VoiceHandler:
         self.rvc_inference = None
         self.rvc_active = RVC_ENABLED
         
-        # Only load the model if RVC is enabled in config
-        if RVC_ENABLED and os.path.exists(RVC_MODEL_PATH):
+        # We no longer load the model immediately to save RAM at startup.
+        # Loading will happen in rvc_convert if active.
+        if self.rvc_active:
+            logger.info("RVC is enabled in config but will be lazy-loaded on first use.")
+
+    def _load_rvc(self):
+        """Lazy load RVC models and torch to save RAM"""
+        if self.rvc_inference is not None:
+            return True
+            
+        if not os.path.exists(RVC_MODEL_PATH):
+            logger.warning(f"RVC Model not found at {RVC_MODEL_PATH}. Disabling RVC.")
+            self.rvc_active = False
+            return False
+
+        try:
+            logger.info("📦 Loading RVC/Torch dependencies (this may take a moment)...")
+            import torch
+            from rvc_python.infer import RVCInference
+            
+            self.rvc_inference = RVCInference(device=RVC_DEVICE)
+            idx_p = RVC_INDEX_PATH if os.path.exists(RVC_INDEX_PATH) else ""
+            self.rvc_inference.load_model(RVC_MODEL_PATH, index_path=idx_p)
+
             try:
-                from rvc_python.infer import RVCInference
-                self.rvc_inference = RVCInference(device=RVC_DEVICE)
-                # Load model with index if it exists
-                idx_p = RVC_INDEX_PATH if os.path.exists(RVC_INDEX_PATH) else ""
-                self.rvc_inference.load_model(RVC_MODEL_PATH, index_path=idx_p)
-
-                # Set default inference parameters
-                try:
-                    from config import RVC_METHOD
-                    method = RVC_METHOD
-                except ImportError:
-                    method = "pm"
-
-                self.rvc_inference.f0method = method
-                self.rvc_inference.f0up_key = RVC_PITCH
-
-                logger.info(f"RVC Model loaded from {RVC_MODEL_PATH} using {method}. Active: {self.rvc_active}")
+                from config import RVC_METHOD
+                method = RVC_METHOD
             except ImportError:
-                logger.error("rvc-python not installed. Run 'pip install rvc-python' to use RVC.")
-                self.rvc_active = False
-            except Exception as e:
-                logger.error(f"Failed to initialize RVC: {e}")
-                self.rvc_active = False
-        else:
-            if self.rvc_active:
-                logger.warning(f"RVC Model not found at {RVC_MODEL_PATH}. RVC will be disabled.")
-                self.rvc_active = False
+                method = "pm"
+
+            self.rvc_inference.f0method = method
+            self.rvc_inference.f0up_key = RVC_PITCH
+            logger.info(f"✅ RVC Model loaded successfully using {method}.")
+            return True
+        except ImportError:
+            logger.error("rvc-python or torch not installed. Disabling RVC.")
+            self.rvc_active = False
+            return False
+        except Exception as e:
+            logger.error(f"Failed to initialize RVC: {e}")
+            self.rvc_active = False
+            return False
 
     def clean_text(self, text):
         """Remove asterisks and text between them (actions/narration)"""
@@ -141,17 +153,19 @@ class VoiceHandler:
                     time.sleep(0.5)
 
     def rvc_convert(self, input_path):
-        """Convert voice using RVC model"""
-        if not self.rvc_inference or not self.rvc_active:
+        """Convert voice using RVC model with lazy loading and memory cleanup"""
+        if not self.rvc_active:
+            return input_path
+            
+        # Lazy load if not already loaded
+        if not self._load_rvc():
             return input_path
             
         logger.info("🎭 Converting voice with RVC...")
-        # Clean naming logic: force a simple suffix
         base_name = os.path.splitext(input_path)[0].replace("_rvc", "")
         output_path = f"{base_name}_rvc.wav"
         
         try:
-            # Bypass self.rvc_inference.infer_file because it's buggy in 0.1.5
             model_info = self.rvc_inference.models[self.rvc_inference.current_model]
             file_index = model_info.get("index", "")
             
@@ -171,9 +185,6 @@ class VoiceHandler:
             )
             
             if isinstance(result, tuple):
-                if len(result) == 2 and isinstance(result[1], tuple):
-                    logger.error(f"❌ RVC Pipeline Error: {result[0]}")
-                    return input_path
                 audio_data = result[0]
             else:
                 audio_data = result
@@ -183,6 +194,17 @@ class VoiceHandler:
             
             # Clean up input immediately after conversion
             self._safe_delete(input_path)
+            
+            # Memory Cleanup
+            try:
+                import torch
+                import gc
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+                gc.collect()
+            except:
+                pass
+                
             return output_path
             
         except Exception as e:
