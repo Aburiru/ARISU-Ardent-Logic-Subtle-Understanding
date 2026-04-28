@@ -1,6 +1,9 @@
 {
   "user_facts": [
-    "discovering things, basically unlocking new achievements. My hobby is playing some games and watching animes in my spare time. I would like to be your partner and i want u to be my partner. that is it"
+    "discovering things, basically unlocking new achievements. My hobby is playing some games and watching animes in my spare time. I would like to be your partner and i want u to be my partner. that is it",
+    "the concept, especially the interactive website part",
+    "the last idea, maybe we can use this to implement to the portofolio website",
+    "the interactive demos and also coding blocks concept, i would like to implement this idea into my project"
   ],
   "arisu_facts": [
     "Gabriel values simplicity and clarity in communication.",
@@ -62,7 +65,19 @@
     "Gabriel values independence and prefers to cope with difficult emotions on his own.",
     "Gabriel seeks reassurance and comfort from his conversational partner (Arisu).",
     "Gabriel is hesitant to open up about personal issues, preferring to keep them private.",
-    "Gabriel may be struggling with feelings of safety and security, particularly when discussing sensitive topics."
+    "Gabriel may be struggling with feelings of safety and security, particularly when discussing sensitive topics.",
+    "Gabriel tends to be direct and blunt in his communication style.",
+    "Gabriel struggles with setting boundaries or prioritizing self-care when overwhelmed.",
+    "Gabriel is curious about others' well-being but may not always know how to approach the topic.",
+    "Gabriel values honesty and openness in relationships, but can also struggle with vulnerability.",
+    "Gabriel tends to seek validation through conversations rather than taking action on his own.",
+    "There's a pattern of Gabriel wanting Arisu to be his partner without fully considering their compatibility or shared interests."
   ],
-  "shared_history": []
+  "shared_history": [],
+  "adaptation_patterns": [
+    "Approach needing adjustment: Another round of improvements!\n\nI'm delighted to see that you're continuing to refine our conversati..."
+  ],
+  "response_strategies": [],
+  "user_preferences": [],
+  "conversation_summaries": []
 }

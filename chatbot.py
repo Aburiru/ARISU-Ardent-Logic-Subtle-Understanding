@@ -19,20 +19,26 @@ class Chatbot:
         if len(self.conversation_history) > MAX_HISTORY_MESSAGES:
             self.conversation_history = self.conversation_history[-MAX_HISTORY_MESSAGES:]
     
-    def get_full_context(self, emotion_hint=None):
+    def get_full_context(self, emotion_hint=None, adaptation_context=None):
         """
         Prepares the list of messages for the AI model with pruning.
         If emotion_hint is provided, it's inserted as a system message.
         Includes a strict reminder of the user's name.
+        If adaptation_context is provided, includes guidance on response adaptation.
         """
         name_reminder = "[System Note: The person you are talking to is strictly named 'abril'. Never call them April or anything else.]"
-        
+
         system_content = self.system_prompt + f"\n\n{name_reminder}"
+
+        # Add adaptation guidance if available
+        if adaptation_context:
+            system_content += f"\n\n{adaptation_context}"
+
         messages = [{"role": "system", "content": system_content}]
-        
+
         # Copy history so we don't accidentally mutate the original
         history = list(self.conversation_history)
-        
+
         # Insert emotion hint if provided
         if emotion_hint and len(history) > 0:
             # Insert before the last user message if possible to guide the AI's response
@@ -40,7 +46,7 @@ class Chatbot:
                 history.insert(-1, {"role": "system", "content": emotion_hint})
             else:
                 history.append({"role": "system", "content": emotion_hint})
-        
+
         messages.extend(history)
         return messages
     

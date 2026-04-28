@@ -16,7 +16,7 @@ from memory_manager import MemoryManager
 from config import (
     API_HOST, API_PORT, 
     HISTORY_FILE, FACTS_FILE, LOG_FILE,
-    ARISU_SYSTEM_PROMPT
+    ARISU_SYSTEM_PROMPT, HISTORY_SUMMARY_THRESHOLD
 )
 
 # Setup logging
@@ -68,22 +68,43 @@ def speech_worker():
 # Start the speech worker thread
 threading.Thread(target=speech_worker, daemon=True).start()
 
-def extract_facts(user_message, ai_response):
-    """Simple rule-based fact extraction"""
+def analyze_response_effectiveness(user_message, ai_response, emotion):
+    """Analyze if the AI response was effective based on user's follow-up"""
     import re
-    # Patterns for user telling things to ARISU
-    user_patterns = [
-        r"(?:remember that|my favorite|i like|i love) (.*)",
-        r"i am (?:a|an) (.*)",
-        r"i work as (?:a|an) (.*)"
+
+    # Positive engagement signals
+    positive_signals = [
+        r"(?:thanks|thank you|thx|appreciate)",
+        r"(?:good|great|awesome|nice|perfect|excellent)",
+        r"(?:yeah|yes|yep|yup|indeed|correct|right)",
+        r"(?:i like|i love|i agree|that helps)",
+        r"(?:tell me more|go on|what else|continue)",
+        r"(?:\*laughs\*|\*smiles\*|lol|haha)"
     ]
-    
-    for pattern in user_patterns:
-        match = re.search(pattern, user_message, re.IGNORECASE)
-        if match:
-            fact = match.group(1).strip()
-            fact = re.sub(r'[?.!]$', '', fact)
-            memory.add_fact("user_facts", fact)
+
+    # Negative/disengagement signals
+    negative_signals = [
+        r"(?:no|not really|doesn't help|wrong|incorrect)",
+        r"(?:confusing|unclear|what do you mean)",
+        r"(?:nevermind|forget it|stop)",
+        r"(?:\*sighs\*|\*frustrated\*|ugh|wtf)"
+    ]
+
+    # Check for positive signals
+    for pattern in positive_signals:
+        if re.search(pattern, user_message, re.IGNORECASE):
+            memory.add_response_strategy(f"Response approach that worked: {ai_response[:100]}...")
+            logger.info(f"📈 Positive engagement detected - strategy recorded")
+            return "positive"
+
+    # Check for negative signals
+    for pattern in negative_signals:
+        if re.search(pattern, user_message, re.IGNORECASE):
+            memory.add_adaptation_pattern(f"Approach needing adjustment: {ai_response[:100]}...")
+            logger.info(f"🔄 Negative feedback detected - adaptation noted")
+            return "negative"
+
+    return "neutral"
 
 def load_history():
     """Load conversation history from file"""
@@ -115,6 +136,32 @@ def save_history():
 # Load history on startup
 load_history()
 
+def perform_memory_maintenance():
+    """Extract facts and summarize if history is too long"""
+    try:
+        # 1. Extract facts from recent conversation
+        recent_messages = arisu.conversation_history[-10:]
+        new_facts = brain.extract_memories(recent_messages)
+        if new_facts:
+            for fact in new_facts:
+                memory.add_fact("user_facts", fact)
+            logger.info(f"🧠 Extracted {len(new_facts)} new facts from conversation.")
+
+        # 2. Check if we need to summarize
+        if len(arisu.conversation_history) >= HISTORY_SUMMARY_THRESHOLD:
+            logger.info("📝 Conversation history reached threshold. Summarizing...")
+            summary = brain.summarize_conversation(arisu.conversation_history)
+            memory.add_summary(summary)
+            
+            # Keep only the most recent messages after summarization
+            # We keep about 1/3 of the threshold for continuity
+            keep_count = HISTORY_SUMMARY_THRESHOLD // 3
+            arisu.conversation_history = arisu.conversation_history[-keep_count:]
+            logger.info(f"✅ History summarized and pruned to last {keep_count} messages.")
+            save_history()
+    except Exception as e:
+        logger.error(f"Error during memory maintenance: {e}")
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     """Handle chat messages"""
@@ -136,27 +183,43 @@ def chat():
         
         # 3. Get response with context, memory, and emotion hint
         facts_summary = memory.get_facts_summary()
-        
-        emotion_hint = facts_summary # Inject facts first
+
+        emotion_hint = facts_summary  # Inject facts first
         if emotion != 'neutral' and intensity >= 1.0:
             emotion_hint += f"\n[System Note: Gabriel appears {emotion}. Intensity: {intensity:.1f}. Respond with your systematic reasoning, maintaining your composed and analytical tone while addressing this state.]"
-        
-        context = arisu.get_full_context(emotion_hint=emotion_hint)
+
+        # Build adaptation context from learned patterns
+        adaptation_context = None
+        recent_adaptations = memory.get_adaptation_history()[-3:]  # Last 3 adaptations
+        effective_strategies = memory.get_effective_strategies()[-3:]  # Last 3 effective strategies
+
+        if recent_adaptations or effective_strategies:
+            adaptation_context = "[ADAPTATION GUIDANCE BASED ON PAST INTERACTIONS]\n"
+            if effective_strategies:
+                adaptation_context += "Strategies that worked well: " + "; ".join(effective_strategies) + "\n"
+            if recent_adaptations:
+                adaptation_context += "Areas needing adjustment: " + "; ".join(recent_adaptations) + "\n"
+            adaptation_context += "[Use these insights to adapt your communication style while maintaining your core personality.]"
+
+        context = arisu.get_full_context(emotion_hint=emotion_hint, adaptation_context=adaptation_context)
         thought, response = brain.chat_with_thought(context)
         
         if thought:
             logger.info(f"ARISU Thought: {thought}")
         
-        # 4. Extract new facts to remember for next time
-        extract_facts(user_message, response)
-        
         # 4. Add response to history
         arisu.add_message("assistant", response)
 
-        # 5. Queue speech response (handled by background worker)
+        # 5. Perform memory maintenance in a separate thread to avoid blocking response
+        threading.Thread(target=perform_memory_maintenance).start()
+
+        # 6. Analyze response effectiveness for self-development
+        analyze_response_effectiveness(user_message, response, emotion)
+
+        # 7. Queue speech response (handled by background worker)
         speech_queue.put((response, emotion))
 
-        # 6. Save and return
+        # 8. Save and return
         save_history()
         
         logger.info(f"ARISU: {response[:50]}...")

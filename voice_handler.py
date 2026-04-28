@@ -77,13 +77,49 @@ class VoiceHandler:
             return False
 
     def clean_text(self, text):
-        """Remove asterisks and text between them (actions/narration)"""
-        # Remove asterisks and content between them (*sigh*)
-        cleaned = re.sub(r'\*.*?\*', '', text)
-        # Remove common kaomoji that might sound weird
-        cleaned = re.sub(r'\([^\)]+\)', '', cleaned)
-        # Clean extra spaces
+        """Remove asterisks, XML tags, and other non-speech elements"""
+        # 0. Pre-clean: Remove common unclosed thought patterns if they exist
+        # If there's a <thought> but no </thought>, remove everything from <thought> to end
+        if '<thought' in text.lower() and '</thought' not in text.lower():
+            text = re.sub(r'<thought.*', '', text, flags=re.DOTALL | re.IGNORECASE)
+
+        # 1. Remove XML-like tags (<thought>, <response>, etc.) and their content
+        cleaned = re.sub(r'<[a-zA-Z][^>]*>.*?</[a-zA-Z][^>]*>', '', text, flags=re.DOTALL)
+        # Remove any orphaned opening/closing tags
+        cleaned = re.sub(r'<[a-zA-Z][^>]*>', '', cleaned)
+        cleaned = re.sub(r'</[a-zA-Z][^>]*>', '', cleaned)
+        
+        # 2. Remove Markdown horizontal rules
+        cleaned = re.sub(r'^[ \t]*[-*_]{3,}[ \t]*$', '', cleaned, flags=re.MULTILINE)
+        
+        # 3. Handle bold/strikethrough - strip markers but KEEP text
+        cleaned = re.sub(r'(\*\*|__|~~)(.*?)\1', r'\2', cleaned)
+        
+        # 4. Remove actions in single asterisks (*sigh*) entirely
+        cleaned = re.sub(r'\*[^*]+\*', '', cleaned)
+        
+        # 5. Handle italics in underscores - strip markers but KEEP text
+        cleaned = re.sub(r'(_)(.*?)\1', r'\2', cleaned)
+        
+        # 6. Remove common kaomoji/emoticons in parentheses (e.g., (^_^), (o_o), (x_x))
+        cleaned = re.sub(r'\([^a-zA-Z0-9\s]{1,6}\)', '', cleaned)
+        cleaned = re.sub(r'\([a-z0-9_]{1,3}\)', '', cleaned, flags=re.IGNORECASE)
+        
+        # 7. Remove problematic standalone symbols
+        cleaned = re.sub(r'[~#|\\`\^]', ' ', cleaned)
+        cleaned = cleaned.replace('_', ' ')
+        
+        # 8. Remove any remaining non-standard symbols
+        bad_symbols = ['¤', '§', '©', '®', '™', '°', '±', 'µ', '¶', '·', '•']
+        for s in bad_symbols:
+            cleaned = cleaned.replace(s, ' ')
+
+        # 9. Remove non-printable and invisible Unicode characters
+        cleaned = re.sub(r'[\u200b\u200c\u200d\u200e\u200f\u00ad]', '', cleaned)
+
+        # 10. Final cleanup of whitespace
         cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+        
         return cleaned
 
     def _get_emotion_settings(self, emotion):

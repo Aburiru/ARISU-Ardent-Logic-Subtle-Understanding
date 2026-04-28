@@ -37,43 +37,79 @@ class ArisuReflector:
             return
 
         logger.info("Starting autonomous reflection pass...")
-        
+
         # Prepare context for reflection
         history_text = "\n".join([f"{m['role']}: {m['content']}" for m in history[-30:]])
         current_facts = "; ".join(self.memory.facts.get('user_facts', []))
-        
-        prompt = f"""[SYSTEM REFLECTION MODE]
-You are performing an autonomous reflection on your recent interactions with Gabriel.
-Your goal is to identify new patterns, deeper facts, or logical connections that weren't explicitly stated but are evident from the dialogue.
+        current_strategies = "; ".join(self.memory.facts.get('response_strategies', []))
 
-RECENT HISTORY:
+        # Multi-phase reflection prompt
+        prompt = f"""[SYSTEM REFLECTION & SELF-DEVELOPMENT MODE]
+You are performing an autonomous reflection on your recent interactions with Gabriel.
+This is a meta-cognitive process to improve your effectiveness as his AI companion.
+
+RECENT CONVERSATION HISTORY:
 {history_text}
 
-CURRENT KNOWN FACTS:
+CURRENT KNOWN FACTS ABOUT GABRIEL:
 {current_facts}
 
-TASK:
-1. Analyze the history for 'implicit' facts about Gabriel (habits, priorities, recurring problems).
-2. Identify any logical inconsistencies Gabriel might be facing that you should address later.
-3. Formulate these as concise 'Arisu Notes' for your long-term memory.
+CURRENT EFFECTIVE RESPONSE STRATEGIES:
+{current_strategies}
 
-Format your output as a JSON list of strings, like this:
-["Gabriel tends to prioritize speed over accuracy when frustrated.", "The current project architecture has a bottleneck in the API layer."]
-Only output the JSON list. If no new insights, output [].
+TASK 1 - IMPLICIT FACTS EXTRACTION:
+Analyze the history for 'implicit' facts about Gabriel (habits, priorities, recurring problems, emotional patterns).
+
+TASK 2 - RESPONSE EFFECTIVENESS ANALYSIS:
+Identify which of your response styles/approaches worked well:
+- When did Gabriel engage more positively?
+- Which response formats (detailed vs concise, technical vs emotional) received better reception?
+- What communication patterns should you reinforce?
+
+TASK 3 - SELF-DEVELOPMENT ADAPTATION:
+Identify areas where YOUR behavior should adapt:
+- Are there recurring misunderstandings that suggest your communication style needs adjustment?
+- What patterns in Gabriel's messages suggest he needs different support?
+- How should you evolve your approach based on recent interactions?
+
+Format your output as a JSON object with these keys:
+{{
+  "implicit_facts": ["fact1", "fact2"],
+  "effective_strategies": ["strategy1", "strategy2"],
+  "adaptation_needs": ["adaptation1", "adaptation2"]
+}}
+
+If no insights in a category, use empty arrays. Only output valid JSON.
 """
-        
-        # We use a direct chat call here to avoid the normal thought/response split for this internal task
-        # But we can still use chat_with_thought if we want her to 'think' about her reflection
+
         thought, reflection_json = self.brain.chat_with_thought([{"role": "user", "content": prompt}])
-        
+
         try:
-            new_notes = json.loads(reflection_json)
-            if isinstance(new_notes, list) and new_notes:
-                for note in new_notes:
-                    if self.memory.add_fact("arisu_facts", note):
-                        logger.info(f"✨ Autonomous Insight: {note}")
-            else:
+            reflection_data = json.loads(reflection_json)
+
+            # Process implicit facts
+            if isinstance(reflection_data.get("implicit_facts"), list):
+                for fact in reflection_data["implicit_facts"]:
+                    if self.memory.add_fact("arisu_facts", fact):
+                        logger.info(f"✨ Autonomous Insight: {fact}")
+
+            # Process effective strategies
+            if isinstance(reflection_data.get("effective_strategies"), list):
+                for strategy in reflection_data["effective_strategies"]:
+                    if self.memory.add_fact("response_strategies", strategy):
+                        logger.info(f"📈 Effective Strategy Identified: {strategy}")
+
+            # Process adaptation needs
+            if isinstance(reflection_data.get("adaptation_needs"), list):
+                for adaptation in reflection_data["adaptation_needs"]:
+                    if self.memory.add_fact("adaptation_patterns", adaptation):
+                        logger.info(f"🔄 Adaptation Pattern: {adaptation}")
+
+            if not any([reflection_data.get("implicit_facts"),
+                       reflection_data.get("effective_strategies"),
+                       reflection_data.get("adaptation_needs")]):
                 logger.info("No new insights discovered in this pass.")
+
         except Exception as e:
             logger.error(f"Failed to parse reflection: {e}")
             logger.debug(f"Raw reflection: {reflection_json}")
