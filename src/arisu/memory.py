@@ -2,7 +2,7 @@
 import json
 import os
 import logging
-from config import FACTS_FILE, MAX_FACTS_TO_INJECT
+from .config import FACTS_FILE, MAX_FACTS_TO_INJECT
 
 logger = logging.getLogger("ARISU_Memory")
 

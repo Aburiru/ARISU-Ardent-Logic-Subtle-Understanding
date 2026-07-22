@@ -10,7 +10,7 @@ import time
 from playsound import playsound
 import re
 import logging
-from config import (
+from .config import (
     DEFAULT_VOICE, VOICE_RATE, VOICE_VOLUME,
     RVC_ENABLED, RVC_MODEL_PATH, RVC_INDEX_PATH, RVC_PITCH, RVC_DEVICE
 )

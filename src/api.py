@@ -8,15 +8,13 @@ import random
 import logging
 
 # Import shared modules
-from arisu.chatbot import Chatbot
-from arisu.brain import AIBrain
-from arisu.emotions import EmotionDetector
 from arisu.voice import VoiceHandler
-from arisu.memory import MemoryManager
+from arisu.response_handler import handle_chat, _arisu as arisu, _brain as brain, _detector as detector, _memory as memory
 from arisu.config import (
     API_HOST, API_PORT, 
-    HISTORY_FILE, FACTS_FILE, LOG_FILE,
-    ARISU_SYSTEM_PROMPT, HISTORY_SUMMARY_THRESHOLD
+    HISTORY_FILE, LOG_FILE, # FACTS_FILE no longer directly used here
+    ARISU_SYSTEM_PROMPT, # ARISU_SYSTEM_PROMPT no longer directly used here
+    HISTORY_SUMMARY_THRESHOLD
 )
 
 # Setup logging
@@ -36,12 +34,8 @@ CORS(app)  # Allow HTA to access API
 import threading
 import queue
 
-# Initialize ARISU components
-arisu = Chatbot("ARISU", ARISU_SYSTEM_PROMPT)
-brain = AIBrain()
-detector = EmotionDetector()
+# Initialize ARISU components that are NOT part of the response_handler
 voice = VoiceHandler()
-memory = MemoryManager()
 
 # Speech Queue and Worker
 speech_queue = queue.Queue()
@@ -107,60 +101,21 @@ def analyze_response_effectiveness(user_message, ai_response, emotion):
     return "neutral"
 
 def load_history():
-    """Load conversation history from file"""
-    if os.path.exists(HISTORY_FILE):
-        try:
-            with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                arisu.conversation_history = data.get('messages', [])
-                detector.message_count = data.get('message_count', 0)
-                detector.emotion_history = data.get('emotions', [])
-            logger.info(f"Successfully loaded history from {HISTORY_FILE}")
-        except Exception as e:
-            logger.error(f"History load error: {e}")
+    """Load conversation history from file (handled by response_handler now)"""
+    arisu.load_history() # ponytail: delegates to response_handler's arisu instance
 
 def save_history():
-    """Save conversation history to file"""
-    data = {
-        'messages': arisu.conversation_history,
-        'message_count': detector.message_count,
-        'emotions': detector.emotion_history,
-        'last_updated': datetime.now().isoformat()
-    }
-    try:
-        with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-    except Exception as e:
-        logger.error(f"History save error: {e}")
+    """Save conversation history to file (delegated to response_handler's internal logic)"""
+    arisu.save_history()
+
 
 # Load history on startup
-load_history()
+# ponytail: loading handled by response_handler on its initialization
+# load_history()
 
-def perform_memory_maintenance():
-    """Extract facts and summarize if history is too long"""
-    try:
-        # 1. Extract facts from recent conversation
-        recent_messages = arisu.conversation_history[-10:]
-        new_facts = brain.extract_memories(recent_messages)
-        if new_facts:
-            for fact in new_facts:
-                memory.add_fact("user_facts", fact)
-            logger.info(f"🧠 Extracted {len(new_facts)} new facts from conversation.")
-
-        # 2. Check if we need to summarize
-        if len(arisu.conversation_history) >= HISTORY_SUMMARY_THRESHOLD:
-            logger.info("📝 Conversation history reached threshold. Summarizing...")
-            summary = brain.summarize_conversation(arisu.conversation_history)
-            memory.add_summary(summary)
-            
-            # Keep only the most recent messages after summarization
-            # We keep about 1/3 of the threshold for continuity
-            keep_count = HISTORY_SUMMARY_THRESHOLD // 3
-            arisu.conversation_history = arisu.conversation_history[-keep_count:]
-            logger.info(f"✅ History summarized and pruned to last {keep_count} messages.")
-            save_history()
-    except Exception as e:
-        logger.error(f"Error during memory maintenance: {e}")
+# ponytail: memory maintenance is now handled internally by response_handler's loop
+# def perform_memory_maintenance():
+#    pass
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -174,52 +129,16 @@ def chat():
         
         logger.info(f"User: {user_message[:50]}...")
         
-        # 1. Detect emotion
-        emotion, intensity, indicators = detector.detect_emotion(user_message)
-        logger.info(f"Detected emotion: {emotion} (intensity: {intensity})")
-        
-        # 2. Add message to history
-        arisu.add_message("user", user_message)
-        
-        # 3. Get response with context, memory, and emotion hint
-        facts_summary = memory.get_facts_summary()
+        # 1️⃣ Get response via unified handler
+        response, thought, detected_emotion, intensity, indicators = handle_chat(user_message)
 
-        emotion_hint = facts_summary  # Inject facts first
-        if emotion != 'neutral' and intensity >= 1.0:
-            emotion_hint += f"\n[System Note: Gabriel appears {emotion}. Intensity: {intensity:.1f}. Respond with your systematic reasoning, maintaining your composed and analytical tone while addressing this state.]"
+        # 2️⃣ Analyze response effectiveness for self‑development
+        analyze_response_effectiveness(user_message, response, detected_emotion)
 
-        # Build adaptation context from learned patterns
-        adaptation_context = None
-        recent_adaptations = memory.get_adaptation_history()[-3:]  # Last 3 adaptations
-        effective_strategies = memory.get_effective_strategies()[-3:]  # Last 3 effective strategies
+        # 3️⃣ Queue speech response (handled by background worker)
+        speech_queue.put((response, detected_emotion))
 
-        if recent_adaptations or effective_strategies:
-            adaptation_context = "[ADAPTATION GUIDANCE BASED ON PAST INTERACTIONS]\n"
-            if effective_strategies:
-                adaptation_context += "Strategies that worked well: " + "; ".join(effective_strategies) + "\n"
-            if recent_adaptations:
-                adaptation_context += "Areas needing adjustment: " + "; ".join(recent_adaptations) + "\n"
-            adaptation_context += "[Use these insights to adapt your communication style while maintaining your core personality.]"
-
-        context = arisu.get_full_context(emotion_hint=emotion_hint, adaptation_context=adaptation_context)
-        thought, response = brain.chat_with_thought(context)
-        
-        if thought:
-            logger.info(f"ARISU Thought: {thought}")
-        
-        # 4. Add response to history
-        arisu.add_message("assistant", response)
-
-        # 5. Perform memory maintenance in a separate thread to avoid blocking response
-        threading.Thread(target=perform_memory_maintenance).start()
-
-        # 6. Analyze response effectiveness for self-development
-        analyze_response_effectiveness(user_message, response, emotion)
-
-        # 7. Queue speech response (handled by background worker)
-        speech_queue.put((response, emotion))
-
-        # 8. Save and return
+        # 4️⃣ Save and return
         save_history()
         
         logger.info(f"ARISU: {response[:50]}...")
@@ -227,7 +146,7 @@ def chat():
         return jsonify({
             'response': response,
             'thought': thought,
-            'emotion': emotion if emotion != 'neutral' else None,
+            'emotion': detected_emotion if detected_emotion else None,
             'intensity': round(intensity, 2),
             'timestamp': datetime.now().strftime("%H:%M"),
             'debug': {
@@ -235,10 +154,10 @@ def chat():
                 'trend': detector.get_emotion_trend()
             }
         })
-    
     except Exception as e:
         logger.exception(f"Error in /api/chat: {e}")
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/api/stats', methods=['GET'])
 def get_stats():

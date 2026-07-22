@@ -3,9 +3,9 @@ import time
 import logging
 import json
 import os
-from ai_brain import AIBrain
-from memory_manager import MemoryManager
-from config import HISTORY_FILE, LOG_FILE
+from arisu.brain import AIBrain
+from arisu.memory import MemoryManager
+from arisu.config import HISTORY_FILE, LOG_FILE
 
 # Setup logging
 logging.basicConfig(

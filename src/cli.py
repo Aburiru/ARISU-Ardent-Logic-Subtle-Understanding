@@ -5,11 +5,11 @@ import random
 from colorama import Fore, Style, init
 
 # Import shared modules
-from chatbot import Chatbot
-from ai_brain import AIBrain
-from emotion_detector import EmotionDetector
-from config import ARISU_SYSTEM_PROMPT
-from voice_handler import VoiceHandler
+from arisu.chatbot import Chatbot
+from arisu.brain import AIBrain
+from arisu.emotions import EmotionDetector
+from arisu.config import ARISU_SYSTEM_PROMPT
+from arisu.voice import VoiceHandler
 
 # Initialize colorama
 init(autoreset=True)
