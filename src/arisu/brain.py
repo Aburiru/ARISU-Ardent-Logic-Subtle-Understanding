@@ -3,7 +3,7 @@
 import requests
 import json
 import re
-from config import MODEL_NAME, OLLAMA_API_URL, OLLAMA_TIMEOUT
+from .config import MODEL_NAME, OLLAMA_API_URL, OLLAMA_TIMEOUT
 
 class AIBrain:
     def __init__(self):

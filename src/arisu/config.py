@@ -80,10 +80,18 @@ MAX_FACTS_TO_INJECT = 15 # Maximum number of facts to inject into context to sav
 API_HOST = "127.0.0.1"
 API_PORT = 5001
 
+import os
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent.parent.parent.absolute()
+
 # File paths
-HISTORY_FILE = "arisu_conversation.json"
-FACTS_FILE = "arisu_facts.json"
-LOG_FILE = "arisu_debug.log"
+DATA_DIR = os.path.join(ROOT_DIR, "data")
+LOG_DIR = os.path.join(ROOT_DIR, "logs")
+
+HISTORY_FILE = os.path.join(DATA_DIR, "arisu_conversation.json")
+FACTS_FILE = os.path.join(DATA_DIR, "arisu_facts.json")
+LOG_FILE = os.path.join(LOG_DIR, "arisu_debug.log")
 
 # Voice Settings
 DEFAULT_VOICE = "en-US-AnaNeural"
@@ -92,8 +100,8 @@ VOICE_VOLUME = "+0%"
 
 # RVC Settings
 RVC_ENABLED = False  # Set to True once dependencies are installed!
-RVC_MODEL_PATH = "rvc_models/arisu.pth"
-RVC_INDEX_PATH = "rvc_models/arisu.index"
+RVC_MODEL_PATH = os.path.join(ROOT_DIR, "rvc_models/arisu.pth")
+RVC_INDEX_PATH = os.path.join(ROOT_DIR, "rvc_models/arisu.index")
 RVC_PITCH = 12       # Alice (Arisu) has a high-pitched voice, +12 is a good start.
 RVC_DEVICE = "cuda:0" # "cuda:0" for GPU, "cpu" for CPU
 RVC_METHOD = "pm"    # "rmvpe" (High Qual, Slow), "pm" (Fast, Stable), "harvest" (Good for speech)

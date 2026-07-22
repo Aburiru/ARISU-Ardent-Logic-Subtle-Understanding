@@ -1,5 +1,5 @@
 # chatbot.py - Data container for ARISU's conversation
-from config import ARISU_SYSTEM_PROMPT, MAX_HISTORY_MESSAGES
+from .config import ARISU_SYSTEM_PROMPT, MAX_HISTORY_MESSAGES
 
 class Chatbot:
     def __init__(self, name="ARISU", system_prompt=None):

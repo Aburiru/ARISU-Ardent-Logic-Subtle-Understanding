@@ -8,12 +8,12 @@ import random
 import logging
 
 # Import shared modules
-from chatbot import Chatbot
-from ai_brain import AIBrain
-from emotion_detector import EmotionDetector
-from voice_handler import VoiceHandler
-from memory_manager import MemoryManager
-from config import (
+from arisu.chatbot import Chatbot
+from arisu.brain import AIBrain
+from arisu.emotions import EmotionDetector
+from arisu.voice import VoiceHandler
+from arisu.memory import MemoryManager
+from arisu.config import (
     API_HOST, API_PORT, 
     HISTORY_FILE, FACTS_FILE, LOG_FILE,
     ARISU_SYSTEM_PROMPT, HISTORY_SUMMARY_THRESHOLD
