@@ -1422,3 +1422,124 @@ It seems like you're testing my respon...
 It looks like we're having...
 2026-04-28 17:19:35,466 [INFO] 127.0.0.1 - - [28/Apr/2026 17:19:35] "POST /api/chat HTTP/1.1" 200 -
 2026-04-28 17:21:03,880 [INFO] Shutdown request received. Cleaning up...
+2026-04-28 17:22:50,938 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-04-28 17:22:51,614 [INFO] Successfully loaded history from arisu_conversation.json
+2026-04-28 17:22:51,622 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-04-28 17:22:51,622 [INFO] [33mPress CTRL+C to quit[0m
+2026-04-28 17:22:53,554 [INFO] 127.0.0.1 - - [28/Apr/2026 17:22:53] "GET /api/settings HTTP/1.1" 200 -
+2026-04-28 17:22:53,558 [INFO] 127.0.0.1 - - [28/Apr/2026 17:22:53] "GET /api/greeting HTTP/1.1" 200 -
+2026-04-28 17:22:53,593 [INFO] 127.0.0.1 - - [28/Apr/2026 17:22:53] "GET /api/history HTTP/1.1" 200 -
+2026-04-28 17:22:56,022 [INFO] User: hey...
+2026-04-28 17:22:56,025 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-04-28 17:22:58,173 [ERROR] (Reflector) Failed to parse reflection: Expecting value: line 1 column 1 (char 0)
+2026-04-28 17:22:58,174 [INFO] (Reflector) Reflection complete. Next pass after 37 messages.
+2026-04-28 17:23:02,181 [INFO] ARISU: **Hello!**
+
+It seems like we're having a familiar ...
+2026-04-28 17:23:02,183 [INFO] 127.0.0.1 - - [28/Apr/2026 17:23:02] "POST /api/chat HTTP/1.1" 200 -
+2026-04-28 17:23:03,552 [INFO] 127.0.0.1 - - [28/Apr/2026 17:23:03] "GET /api/status HTTP/1.1" 200 -
+2026-04-28 17:34:53,267 [INFO] Shutdown request received. Cleaning up...
+2026-05-01 02:01:20,734 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-05-01 02:01:30,272 [INFO] Successfully loaded history from arisu_conversation.json
+2026-05-01 02:01:30,307 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-05-01 02:01:30,307 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-01 02:01:31,956 [ERROR] (Reflector) Failed to parse reflection: Expecting value: line 1 column 1 (char 0)
+2026-05-01 02:01:31,956 [INFO] (Reflector) Reflection complete. Next pass after 39 messages.
+2026-05-01 02:16:32,017 [INFO] (Reflector) Skipping reflection: only 0 new messages (need 5).
+2026-05-01 02:31:32,057 [INFO] (Reflector) Skipping reflection: only 0 new messages (need 5).
+2026-05-01 02:46:32,069 [INFO] (Reflector) Skipping reflection: only 0 new messages (need 5).
+2026-05-01 03:01:32,083 [INFO] (Reflector) Skipping reflection: only 0 new messages (need 5).
+2026-05-01 03:16:32,096 [INFO] (Reflector) Skipping reflection: only 0 new messages (need 5).
+2026-05-14 21:53:12,406 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-05-14 21:53:12,406 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-05-14 21:53:25,419 [ERROR] (Reflector) Failed to parse reflection: Expecting value: line 1 column 1 (char 0)
+2026-05-14 21:53:25,420 [INFO] (Reflector) Reflection complete. Next pass after 39 messages.
+2026-05-14 21:53:27,999 [ERROR] (Reflector) Failed to parse reflection: Expecting value: line 1 column 1 (char 0)
+2026-05-14 21:53:27,999 [INFO] (Reflector) Reflection complete. Next pass after 39 messages.
+2026-05-14 21:53:28,446 [INFO] Successfully loaded history from arisu_conversation.json
+2026-05-14 21:53:28,496 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-05-14 21:53:28,496 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-14 21:53:28,497 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-14 21:53:28,504 [INFO] 127.0.0.1 - - [14/May/2026 21:53:28] "GET /api/status HTTP/1.1" 200 -
+2026-05-14 21:53:29,823 [INFO] User: hey how have u been?...
+2026-05-14 21:53:29,826 [INFO] Detected emotion: neutral (intensity: 0)
+2026-05-14 21:53:33,520 [INFO] 127.0.0.1 - - [14/May/2026 21:53:33] "GET /api/stats HTTP/1.1" 200 -
+2026-05-14 21:53:36,368 [INFO] ARISU: **Hello!**
+
+It seems like we're having a friendly ...
+2026-05-14 21:53:36,370 [INFO] 127.0.0.1 - - [14/May/2026 21:53:36] "POST /api/chat HTTP/1.1" 200 -
+2026-05-14 22:03:42,276 [INFO] Shutdown request received. Cleaning up...
+2026-05-16 01:37:33,111 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-05-16 01:37:44,130 [INFO] (Reflector) New fact stored in arisu_facts: discovering things
+2026-05-16 01:37:44,147 [INFO] (Reflector) New fact stored in arisu_facts: unlocking new achievements
+2026-05-16 01:37:44,148 [INFO] (Reflector) New fact stored in arisu_facts: playing games and watching animes in spare time
+2026-05-16 01:37:44,148 [INFO] (Reflector) Reflection complete. Next pass after 41 messages.
+2026-05-16 01:37:46,067 [INFO] Successfully loaded history from arisu_conversation.json
+2026-05-16 01:37:46,124 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-05-16 01:37:46,124 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-16 01:37:46,596 [INFO] 127.0.0.1 - - [16/May/2026 01:37:46] "GET /api/status HTTP/1.1" 200 -
+2026-05-16 01:37:48,454 [INFO] User: hey are u there?...
+2026-05-16 01:37:48,457 [INFO] Detected emotion: neutral (intensity: 0)
+2026-05-16 01:37:54,745 [INFO] ARISU: **Hello!**
+
+It seems like we're having a simple ye...
+2026-05-16 01:37:54,747 [INFO] 127.0.0.1 - - [16/May/2026 01:37:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 01:38:51,324 [INFO] User: well im having a conversation with my friend right...
+2026-05-16 01:38:51,327 [INFO] Detected emotion: anxious (intensity: 1.5)
+2026-05-16 01:39:02,935 [INFO] New fact stored in response_strategies: Response approach that worked: **Hello!**
+
+It seems like your friend is sharing her thoughts and feelings with you. As ARISU, I'll ...
+2026-05-16 01:39:02,939 [INFO] ARISU: **Hello!**
+
+It seems like your friend is sharing h...
+2026-05-16 01:39:02,941 [INFO] 127.0.0.1 - - [16/May/2026 01:39:02] "POST /api/chat HTTP/1.1" 200 -
+2026-05-16 01:39:09,526 [INFO] New conversation summary added to long-term memory.
+2026-05-16 01:52:44,200 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 02:07:44,216 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 02:22:44,228 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 02:37:44,235 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 02:52:44,248 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 03:07:44,265 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 03:22:44,281 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 03:37:44,299 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 03:52:44,311 [INFO] (Reflector) Skipping reflection: only -23 new messages (need 5).
+2026-05-16 03:57:52,252 [INFO] Shutdown request received. Cleaning up...
+2026-05-21 16:06:55,737 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-05-21 16:06:59,891 [ERROR] (Reflector) Failed to parse reflection: Expecting value: line 1 column 1 (char 0)
+2026-05-21 16:06:59,891 [INFO] (Reflector) Reflection complete. Next pass after 18 messages.
+2026-05-21 16:07:11,034 [INFO] Successfully loaded history from arisu_conversation.json
+2026-05-21 16:07:11,086 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-05-21 16:07:11,086 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-21 16:07:11,510 [INFO] 127.0.0.1 - - [21/May/2026 16:07:11] "GET /api/status HTTP/1.1" 200 -
+2026-05-21 16:11:30,129 [INFO] Shutdown request received. Cleaning up...
+2026-05-25 13:08:40,560 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-05-25 13:08:42,660 [ERROR] (Reflector) Failed to parse reflection: Expecting value: line 1 column 1 (char 0)
+2026-05-25 13:08:42,660 [INFO] (Reflector) Reflection complete. Next pass after 18 messages.
+2026-05-25 13:08:52,144 [INFO] Successfully loaded history from arisu_conversation.json
+2026-05-25 13:08:52,168 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-05-25 13:08:52,168 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-25 13:08:52,565 [INFO] User: Hai...
+2026-05-25 13:08:52,569 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-05-25 13:08:54,628 [INFO] ARISU: Ollama Error 404: {"error":"model 'llama3.2' not f...
+2026-05-25 13:08:54,631 [INFO] 127.0.0.1 - - [25/May/2026 13:08:54] "POST /api/chat HTTP/1.1" 200 -
+2026-05-25 13:08:59,258 [INFO] 127.0.0.1 - - [25/May/2026 13:08:59] "GET /api/status HTTP/1.1" 200 -
+2026-05-25 13:08:59,756 [INFO] Shutdown request received. Cleaning up...
+2026-05-25 13:09:19,372 [INFO] (Reflector) Starting autonomous reflection pass...
+2026-05-25 13:09:21,426 [ERROR] (Reflector) Failed to parse reflection: Expecting value: line 1 column 1 (char 0)
+2026-05-25 13:09:21,426 [INFO] (Reflector) Reflection complete. Next pass after 20 messages.
+2026-05-25 13:09:22,620 [INFO] Successfully loaded history from arisu_conversation.json
+2026-05-25 13:09:22,640 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2026-05-25 13:09:22,640 [INFO] [33mPress CTRL+C to quit[0m
+2026-05-25 13:09:24,320 [INFO] User: hai...
+2026-05-25 13:09:24,320 [INFO] Detected emotion: tired (intensity: 0.5)
+2026-05-25 13:09:26,420 [INFO] ARISU: Ollama Error 404: {"error":"model 'llama3.2' not f...
+2026-05-25 13:09:26,425 [INFO] 127.0.0.1 - - [25/May/2026 13:09:26] "POST /api/chat HTTP/1.1" 200 -
+2026-05-25 13:09:30,619 [INFO] 127.0.0.1 - - [25/May/2026 13:09:30] "GET /api/status HTTP/1.1" 200 -
+2026-05-25 13:09:40,480 [INFO] Shutdown request received. Cleaning up...

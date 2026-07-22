@@ -6,6 +6,8 @@ API-KEY.txt
 arisu_conversation.json
 arisu_facts.json
 arisu_debug.log
+AGENTS.md
+session.txt
 
 # Large Binaries & Models
 rvc_models/
