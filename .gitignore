@@ -8,6 +8,7 @@ arisu_facts.json
 arisu_debug.log
 AGENTS.md
 session.txt
+issue.md
 
 # Large Binaries & Models
 rvc_models/

@@ -14,6 +14,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(
 from arisu.brain import AIBrain
 from arisu.memory import MemoryManager
 from arisu.voice import VoiceHandler
+from arisu.response_handler import handle_chat
 
 # Initialize components
 brain = AIBrain()
@@ -21,19 +22,15 @@ memory = MemoryManager()
 voice = VoiceHandler()
 
 def process_chat(message):
-    # This is a simplified bridge
-    # It would ideally call chatbot.py logic to build full context
-    # For now, just a direct call to the brain
-    thought, response = brain.chat_with_thought([{"role": "user", "content": message}])
+    # This includes emotion detection, memory integration, and personality processing
+    response_text, thought, detected_emotion, intensity, indicators = handle_chat(message)
     
     # Generate audio
     audio_filename = f"arisu_{int(time.time())}.wav"
     audio_path = os.path.join("data", "audio", audio_filename)
-    # We no longer load the model immediately to save RAM at startup.
-    # Loading will happen in rvc_convert if active.
     
     return {
-        "text": response,
+        "text": response_text,
         "thought": thought,
         "audioUrl": f"/audio/{audio_filename}"
     }
