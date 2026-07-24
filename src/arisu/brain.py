@@ -60,10 +60,15 @@ class AIBrain:
                             decoded_line = line.decode('utf-8')
                             if decoded_line.startswith('data: '):
                                 decoded_line = decoded_line[len('data: '):].strip()
-                            if not decoded_line: # Skip empty lines after stripping
+                            if not decoded_line or decoded_line == "[DONE]": # Skip empty lines or stream terminators
                                 continue
                             
-                            chunk = json.loads(decoded_line)
+                            # 3. Safe parse
+                            try:
+                                chunk = json.loads(decoded_line)
+                                # ... proceed to process chunk ...
+                            except json.JSONDecodeError:
+                                continue # Ignore lines that are somehow not JSON
                             if 'choices' in chunk:
                                 delta = chunk['choices'][0].get('delta', {})
                                 if 'content' in delta:
