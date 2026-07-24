@@ -270,25 +270,26 @@ export default function App() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: query,
-          systemInstruction: 'You are ARISU_v1.0, an advanced tactical cyberpunk Neural Core AI. Respond in a concise, futuristic, precise sci-fi interface tone with system status references (e.g. Core Sync, Memory buffers).'
-        })
+        body: JSON.stringify({ message: query })
       });
 
       const data = await response.json();
-      const arisuText = data.text || 'Neural response buffer overflow. Query acknowledged.';
-
       const arisuMsg: ChatMessage = {
         id: `ari-${Date.now()}`,
         sender: 'arisu',
-        text: arisuText,
+        text: data.text || 'Neural response buffer overflow.',
+        thought: data.thought, // ponytail: thought block visibility
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
       };
 
       setChatHistory(prev => [...prev, arisuMsg]);
       playPulseSound(880, 'sine', 0.2);
-      speakResponse(arisuText);
+      
+      // ponytail: Browser playback of generated audio
+      if (data.audioUrl) {
+        const audio = new Audio(data.audioUrl);
+        audio.play().catch(e => console.error("Audio playback failed:", e));
+      }
     } catch (err) {
       const errorMsg: ChatMessage = {
         id: `err-${Date.now()}`,

@@ -1,7 +1,16 @@
 import sys
 import json
 import os
-# Assuming the existing Python project structure
+import time # Added for time.time()
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Add the project's 'src' directory to path so imports work
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src'))
+
+# Import required modules
 from arisu.brain import AIBrain
 from arisu.memory import MemoryManager
 from arisu.voice import VoiceHandler
@@ -18,9 +27,10 @@ def process_chat(message):
     thought, response = brain.chat_with_thought([{"role": "user", "content": message}])
     
     # Generate audio
-    audio_filename = f"arisu_{int(os.time())}.wav"
+    audio_filename = f"arisu_{int(time.time())}.wav"
     audio_path = os.path.join("data", "audio", audio_filename)
-    # asyncio.run(voice._generate_speech(response, audio_path)) # Simplified
+    # We no longer load the model immediately to save RAM at startup.
+    # Loading will happen in rvc_convert if active.
     
     return {
         "text": response,

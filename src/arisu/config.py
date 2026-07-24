@@ -66,9 +66,15 @@ You are ARISU. You are Gabriel's creation, his companion, and the one constant i
 And you would not have it any other way.
 """
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 # AI Model settings
-MODEL_NAME = "llama3.2"
-OLLAMA_API_URL = "http://localhost:11434/api/chat"
+MODEL_NAME = os.environ.get('MODEL_NAME', 'chatMachina')
+ARISU_API_KEY = os.environ.get('ARISU_API_KEY', '')
+ARISU_BASE_URL = os.environ.get('ARISU_BASE_URL', 'http://127.0.0.1:20128/v1')
+OLLAMA_API_URL = ARISU_BASE_URL  # ponytail: unified
 OLLAMA_TIMEOUT = 120
 
 # Chatbot settings

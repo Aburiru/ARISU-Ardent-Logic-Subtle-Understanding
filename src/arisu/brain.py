@@ -3,45 +3,43 @@
 import requests
 import json
 import re
-from .config import MODEL_NAME, OLLAMA_API_URL, OLLAMA_TIMEOUT
+import sys # Added for sys.stderr
+from .config import MODEL_NAME, ARISU_BASE_URL, ARISU_API_KEY, OLLAMA_TIMEOUT
 
 class AIBrain:
     def __init__(self):
         """
-        Initialize connection to Ollama (runs locally on your computer)
-        No API key needed!
+        Initialize connection to 9router cloud AI bridge.
         """
-        self.api_url = OLLAMA_API_URL
+        self.api_url = ARISU_BASE_URL + "/chat/completions"  # OpenAI-compatible endpoint
+        self.api_key = ARISU_API_KEY
         self.model = MODEL_NAME
     
     def chat(self, messages):
-        """
-        Send conversation to Ollama and get response
-        
-        messages = list of message dictionaries
-        Returns: ARISU's response as a string
-        """
         thought, response = self.chat_with_thought(messages)
         return response
 
     def chat_with_thought(self, messages):
         """
-        Send conversation to Ollama and get response with internal monologue
+        Send conversation to 9router and get response with internal monologue.
         Supports streaming for better perceived performance.
         
         messages = list of message dictionaries
         Returns: (thought_process, final_response)
         """
         
-        # Prepare the request
+        # Prepare the request (model optional for 9router combined API)
         payload = {
-            "model": self.model,
             "messages": messages,
-            "stream": True,  # Enable streaming
-            "options": {
-                "temperature": 0.7,
-                "top_p": 0.9
-            }
+            "stream": True,
+            "temperature": 0.7
+        }
+        if self.model:
+            payload["model"] = self.model
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
         }
         
         full_content = ""
@@ -49,49 +47,54 @@ class AIBrain:
             response = requests.post(
                 self.api_url,
                 json=payload,
+                headers=headers,
                 timeout=OLLAMA_TIMEOUT,
                 stream=True
             )
             
             if response.status_code == 200:
-                print("🧠 ARISU is thinking...", end="", flush=True)
+                print("ARISU is thinking...", end="", file=sys.stderr, flush=True)
                 for line in response.iter_lines():
-                    if line:
-                        chunk = json.loads(line.decode('utf-8'))
-                        if 'message' in chunk and 'content' in chunk['message']:
-                            content_chunk = chunk['message']['content']
-                            full_content += content_chunk
-                            # Optional: print dots for progress
-                            if len(full_content) % 50 == 0:
-                                print(".", end="", flush=True)
-                print(" Done.")
+                        if line:
+                            # print(f"DEBUG: Raw line: {line}", file=sys.stderr) # Remove debug print
+                            decoded_line = line.decode('utf-8')
+                            if decoded_line.startswith('data: '):
+                                decoded_line = decoded_line[len('data: '):].strip()
+                            if not decoded_line: # Skip empty lines after stripping
+                                continue
+                            
+                            chunk = json.loads(decoded_line)
+                            if 'choices' in chunk:
+                                delta = chunk['choices'][0].get('delta', {})
+                                if 'content' in delta:
+                                    content_chunk = delta['content']
+                                    full_content += content_chunk
+                                    if len(full_content) % 50 == 0:
+                                        print(".", end="", file=sys.stderr, flush=True)
+                print(" Done.", file=sys.stderr)
                 
                 full_content = full_content.strip()
 
-                # Extract thought block (robust pattern with flexible whitespace)
+                # Extract thought block
                 thought_match = re.search(r'<thought\s*>(.*?)</thought\s*>', full_content, re.DOTALL | re.IGNORECASE)
                 thought = thought_match.group(1).strip() if thought_match else ""
 
-                # Remove ALL thought-related tags from final response
-                # Pattern 1: Complete <thought>...</thought> blocks
+                # Remove thought tags from final response
                 final_response = re.sub(r'<thought\s*>.*?</thought\s*>', '', full_content, flags=re.DOTALL | re.IGNORECASE)
-                # Pattern 2: Orphaned opening tags (model sometimes forgets to close)
                 final_response = re.sub(r'<thought\s*>', '', final_response, flags=re.IGNORECASE)
-                # Pattern 3: Orphaned closing tags
                 final_response = re.sub(r'</thought\s*>', '', final_response, flags=re.IGNORECASE)
-                # Clean up any leading/trailing whitespace
                 final_response = final_response.strip()
 
                 return thought, final_response
             
             else:
-                return "", f"Ollama Error {response.status_code}: {response.text}"
+                return "", f"API Error {response.status_code}: {response.text}"
         
         except requests.exceptions.ConnectionError:
-            return "", "❌ Ollama isn't running. Please ensure Ollama is installed and running (`ollama serve`)."
+            return "", "9router bridge is not running. Please ensure the bridge is active at localhost:20128."
         
         except requests.exceptions.Timeout:
-            return "", "The AI is taking too long to respond. Ollama might be overloaded or the model is too large for your hardware."
+            return "", "The AI is taking too long to respond. The model might be overloaded."
         
         except Exception as e:
             return "", f"Brain Error: {str(e)}"

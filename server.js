@@ -13,8 +13,10 @@ app.post('/api/chat', async (req, res) => {
     const { message } = req.body;
     if (!message)
         return res.status(400).json({ error: 'Message is required' });
-    // Call Python brain
-    const python = spawn('venv_arisu/Scripts/python', ['src/arisu/api_bridge.py', message]);
+    // Call Python bridge using the venv interpreter
+    const python = spawn('venv_arisu/Scripts/python', ['src/arisu/api_bridge.py', message], {
+        env: { ...process.env, PYTHONPATH: path.join(__dirname, 'src') }
+    });
     let dataString = '';
     python.stdout.on('data', (data) => { dataString += data.toString(); });
     python.stderr.on('data', (data) => { console.error(`Python error: ${data}`); });
@@ -24,6 +26,7 @@ app.post('/api/chat', async (req, res) => {
             res.json(result);
         }
         catch (e) {
+            console.error('Bridge error:', e);
             res.status(500).json({ error: 'Failed to process neural query' });
         }
     });
