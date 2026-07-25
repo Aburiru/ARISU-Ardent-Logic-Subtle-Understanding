@@ -100,14 +100,14 @@ FACTS_FILE = os.path.join(DATA_DIR, "arisu_facts.json")
 LOG_FILE = os.path.join(LOG_DIR, "arisu_debug.log")
 
 # Voice Settings
-DEFAULT_VOICE = "en-US-AnaNeural"
+DEFAULT_VOICE = "en-GB-SoniaNeural"
 VOICE_RATE = "+0%"
 VOICE_VOLUME = "+0%"
 
 # RVC Settings
-RVC_ENABLED = False  # Set to True once dependencies are installed!
-RVC_MODEL_PATH = os.path.join(ROOT_DIR, "rvc_models/arisu.pth")
-RVC_INDEX_PATH = os.path.join(ROOT_DIR, "rvc_models/arisu.index")
-RVC_PITCH = 12       # Alice (Arisu) has a high-pitched voice, +12 is a good start.
+RVC_ENABLED = True  # Set to True once dependencies are installed!
+RVC_MODEL_PATH = os.path.join(ROOT_DIR, "rvc_models/Frieren.pth")
+RVC_INDEX_PATH = os.path.join(ROOT_DIR, "rvc_models/Frieren.index")
+RVC_PITCH = 0.0
 RVC_DEVICE = "cuda:0" # "cuda:0" for GPU, "cpu" for CPU
-RVC_METHOD = "pm"    # "rmvpe" (High Qual, Slow), "pm" (Fast, Stable), "harvest" (Good for speech)
+RVC_METHOD = "rmvpe"    # "rmvpe" (High Qual, Slow), "pm" (Fast, Stable), "harvest" (Good for speech)

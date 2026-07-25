@@ -7,5 +7,6 @@
     "outDir": "./",
     "strict": true
   },
-  "include": ["server.ts"]
+  "include": ["server.ts"],
+  "exclude": ["node_modules"]
 }

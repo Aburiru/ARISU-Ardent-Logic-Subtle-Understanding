@@ -247,31 +247,35 @@ class VoiceHandler:
             logger.error(f"❌ RVC conversion failed: {e}")
             return input_path
 
-    def speak(self, text, emotion='neutral'):
-        """ARISU speaks using Edge-TTS and RVC (if enabled)"""
-        logger.info(f"🔊 ARISU is speaking ({emotion})...")
-        
+    def generate_and_convert(self, text, emotion='neutral'):
+        """Generate TTS and convert with RVC in one go, returning the final file path."""
         timestamp = int(time.time())
         temp_audio = f"temp_arisu_{timestamp}.mp3"
-        final_audio = None
         
         try:
             success = asyncio.run(self._generate_speech(text, temp_audio, emotion))
             if success and os.path.exists(temp_audio):
-                # Apply RVC if enabled
                 final_audio = self.rvc_convert(temp_audio)
-                
-                # Double check the file exists and has content before playing
-                if os.path.exists(final_audio) and os.path.getsize(final_audio) > 0:
-                    playsound(final_audio)
-                else:
-                    logger.warning("Audio file is empty or missing, skipping playback.")
+                return final_audio
+            return None
+        except Exception as e:
+            logger.error(f"Generate and convert error: {e}")
+            if os.path.exists(temp_audio): self._safe_delete(temp_audio)
+            return None
+
+    def speak(self, text, emotion='neutral'):
+        """ARISU speaks using Edge-TTS and RVC (if enabled)"""
+        logger.info(f"🔊 ARISU is speaking ({emotion})...")
+        
+        final_audio = self.generate_and_convert(text, emotion)
+        
+        try:
+            if final_audio and os.path.exists(final_audio) and os.path.getsize(final_audio) > 0:
+                playsound(final_audio)
             else:
-                logger.info("🔇 (Only actions detected, skipping voice output)")
+                logger.warning("Audio file is empty or missing, skipping playback.")
         except Exception as e:
             logger.error(f"Voice Output error: {e}")
             print(f"🔊 ARISU (Text only): {text}")
         finally:
-            # ALWAYS clean up both files
-            if temp_audio: self._safe_delete(temp_audio)
-            if final_audio and final_audio != temp_audio: self._safe_delete(final_audio)
+            if final_audio: self._safe_delete(final_audio)

@@ -29,11 +29,13 @@ app.post('/api/chat', async (req, res) => {
 
   python.on('close', (code) => {
     try {
-      const result = JSON.parse(dataString);
+      const match = dataString.match(/__ARISU_JSON__(\{[\s\S]*\})/);
+      const payload = match ? match[1] : dataString.trim();
+      const result = JSON.parse(payload);
       res.json(result);
     } catch (e) {
       console.error('Bridge error:', e);
-      res.status(500).json({ error: 'Failed to process neural query' });
+      res.status(500).json({ error: 'Failed to process neural query', raw: dataString });
     }
   });
 });
